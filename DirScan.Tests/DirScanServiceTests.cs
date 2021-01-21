@@ -21,31 +21,20 @@ namespace DirScan.Tests
         {
             var svc = new DirectoryService();
             var dirInfo = svc.Scan("c:\\Temp");
-            foreach (var ft in dirInfo.FileTypes)
-                Console.WriteLine($"{ft.Extension} : {ft.TotalSize}  ({ft.Length} bytes)");
 
             Assert.AreEqual(3, dirInfo.FileCount);
             Assert.AreEqual(1, dirInfo.DirectoryCount);
             Assert.AreEqual(28128639, dirInfo.DirectoryFileSize);
+            Assert.AreEqual(3, dirInfo.FileTypes.Count());
+            Assert.AreEqual(4, dirInfo.DirectoryFiles.Count());
+
+            foreach (var ft in dirInfo.FileTypes)
+                Console.WriteLine($"{ft.Extension} : {ft.TotalSize}  ({ft.Length} bytes)");
+            foreach (var df in dirInfo.DirectoryFiles)
+                Console.WriteLine($"{df.Name, 40} :  {df.IsFile, 6} {df.DateCreated, 12:MM/dd/yyyy} {df.Size} ");
         }
 
-        [Test]
-        public void ServiceMapsDirectory()
-        {
 
-        }
-
-        [Test]
-        public void FileManagerTest()
-        {
-            var dirFiles = Directory.EnumerateFiles("c:\\temp", "*.*");
-            Assert.AreEqual(3, dirFiles.Count());
-
-            var dirs = Directory.EnumerateDirectories("c:\\temp", "*.*");
-            Assert.AreEqual(1, dirs.Count());
-
-
-        }
     }
 
 }

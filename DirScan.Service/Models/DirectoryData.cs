@@ -8,5 +8,6 @@ namespace DirScan.Service
         public int DirectoryCount { get; set; }
         public long DirectoryFileSize { get; set; }
         public IEnumerable<FileType> FileTypes { get; set; }
+        public IEnumerable<DirectoryFile> DirectoryFiles { get; set; }
     }
 }
