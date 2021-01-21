@@ -41,7 +41,7 @@ namespace DirScan.Service
             var fileTypes = new List<FileType>();
             foreach (var fi in files)
             {
-                var fileType = new FileType { Extension = fi.Extension, Length = fi.Length };
+                var fileType = new FileType { Extension = fi.Extension.Substring( 1 ), Length = fi.Length };
                 var ft = fileTypes.FirstOrDefault(f => f.Extension == fileType.Extension);
                 if (ft != null)
                     ft.Length += fileType.Length;
