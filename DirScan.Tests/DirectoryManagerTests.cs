@@ -13,7 +13,7 @@ namespace DirScan.Tests
         public void SetUp()
         {
             _dm = new DirectoryManager();
-            _dm.Scan("C:\\Temp\\TestArea");
+            _dm.Scan("C:\\Temp\\DirScanTestArea");
             _dms = _dm.DirectoryDataSummary;
         }
 

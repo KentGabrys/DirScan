@@ -15,7 +15,7 @@ namespace DirScan.Tests
         public void SetUp()
         { 
             _svc = new DirectoryService();
-            _dirInfo = _svc.Scan("c:\\Temp\\TestArea");
+            _dirInfo = _svc.Scan("c:\\Temp\\DirScanTestArea");
         }
 
         [Test]

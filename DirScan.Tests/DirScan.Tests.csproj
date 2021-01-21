@@ -97,12 +97,14 @@
     <PostBuildEvent>cd \
 md Temp
 cd  Temp
-md TestArea
-cd TestArea
-copy $(ProjectDir)TestFiles\*.jpg c:\Temp\TestArea
-copy $(ProjectDir)TestFiles\spoo-config.json c:\Temp\TestArea
+md DirScanTestArea
+cd DirScanTestArea
+del *.* /q /f
+copy $(ProjectDir)TestFiles\*.jpg c:\Temp\DirScanTestArea
+copy $(ProjectDir)TestFiles\spoo-config.json c:\Temp\DirScanTestArea
 md SubDir
 cd SubDir
-copy $(ProjectDir)TestFiles\*.* c:\Temp\TestArea\SubDir</PostBuildEvent>
+del *.* /q /f
+copy $(ProjectDir)TestFiles\*.* c:\Temp\DirScanTestArea\SubDir</PostBuildEvent>
   </PropertyGroup>
 </Project>
