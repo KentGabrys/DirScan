@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?define Resources="..\Setup\Client\"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product
+    Id="32A52780-4C63-48AA-A995-6C22D230206C"
+    Name="DirScan"
+    Language="1033"
+    Version="1.0.0.0"
+    Manufacturer="Code Cruncher"
+    UpgradeCode="78FCB7E4-8B52-4043-99CB-DE230CD93958">
+
+    <Package
+      Keywords="Installer"
+      Description ="An application to scan a directory for statistics and record the files"
+      Manufacturer="Code Cruncher"
+      InstallerVersion="200"
+      Compressed="yes"
+      InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="DirScan" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ProgramMenuDir" />
+    </Feature>
+    <Icon Id="App.ico" SourceFile="$(var.Resources)joker2.ico" />
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="CodeCruncher" Name="CodeCruncher">
+          <Directory Id="INSTALLFOLDER" Name="DirScan" />
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="DirScan">
+          <Component Id="ProgramMenuDir" Guid="56A69999-EF33-4936-9156-C4E53ABE4BDB">
+            <RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+            <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="DirScan" Guid="CEB8EBB6-DCDA-4C0C-9318-5021F6B6F4F5">
+        <File Id="DirScanExecutable"
+              Source="$(var.Resources)DirScan.exe"
+              KeyPath="yes"
+              Vital="yes">
+
+          <Shortcut Id="startMenuDirScanEXE" Directory="ProgramMenuDir" Name="DirScan"
+                    WorkingDirectory='INSTALLDIR' Icon="App.ico" IconIndex="0" Advertise="yes" />
+          <Shortcut Id="desktopDirScanEXE" Directory="DesktopFolder" Name="DirScan"
+                    WorkingDirectory='INSTALLDIR' Icon="App.ico" IconIndex="0" Advertise="yes" />
+        </File>
+      </Component>
+
+      <Component Id="DirScanCommonDLL" Guid="0EE5F3F1-82C1-41FF-8AD1-55FB629A5501">
+        <File Id="DirScanCommonDLL" Source="$(var.Resources)DirScan.Common.dll" KeyPath="yes">
+        </File>
+      </Component>
+
+      <Component Id="DirScanLoggingDLL" Guid="B09A4A71-B1DE-44C9-B29F-C4AB2002DC65">
+        <File Id="DirScanLoggingDLL" Source="$(var.Resources)DirScan.Logging.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <Component Id="DirScanServiceDLL" Guid="EA16DB7E-3F7A-4FE3-8A8D-64EA31FB046B">
+        <File Id="DirScanServiceDLL" Source="$(var.Resources)DirScan.Service.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <Component Id="MicrosoftWindowsAPICodePackDLL" Guid="01B1DF67-E4BF-4974-A843-479C48AB2BA1">
+        <File Id="MicrosoftWindowsAPICodePackDLL" Source="$(var.Resources)Microsoft.WindowsAPICodePack.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <Component Id="MicrosoftWindowsAPICodePackExtendedLinguisticServicesDLL" Guid="B8D49114-F663-49C8-8704-04B095D2BF6A">
+        <File Id="MicrosoftWindowsAPICodePackExtendedLinguisticServicesDLL" Source="$(var.Resources)Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <Component Id="MicrosoftWindowsAPICodePackSensorsDLL" Guid="BF9B40E4-F3FE-4F51-8302-8172B57B9592">
+        <File Id="MicrosoftWindowsAPICodePackSensorsDLL" Source="$(var.Resources)Microsoft.WindowsAPICodePack.Sensors.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <Component Id="MicrosoftWindowsAPICodePackShellDLL" Guid="178B5D30-3A53-46F6-8A16-BF16436414AF">
+        <File Id="MicrosoftWindowsAPICodePackShellDLL" Source="$(var.Resources)Microsoft.WindowsAPICodePack.Shell.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <Component Id="MicrosoftWindowsAPICodePackShellExtensionsDLL" Guid="1D4A7F9B-A7C4-4276-9B31-7A8EF0615BC0">
+        <File Id="MicrosoftWindowsAPICodePackShellExtensionsDLL" Source="$(var.Resources)Microsoft.WindowsAPICodePack.ShellExtensions.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <!--
+      <Component Id="DLL" Guid="nguid">
+        <File Id="DLL" Source="$(var.Resources)" KeyPath="yes">
+        </File>
+      </Component>
+      -->
+    </ComponentGroup>
+  </Fragment>
+</Wix>
