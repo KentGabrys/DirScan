@@ -24,6 +24,8 @@ namespace DirScan.Client
         private string _logFileName;
         private ILogger _logger;
 
+        #region Properties
+
         public string Message
         {
             get => _message;
@@ -56,6 +58,17 @@ namespace DirScan.Client
 
         public bool FolderSelected => !string.IsNullOrEmpty( SelectedFolder );
 
+        public int FileTypeCount
+        {
+            set
+            {
+                _fileTypeCount = value;
+                OnPropertyChanged( nameof( FileTypesMessage ) );
+            }
+        }
+
+        public string FileTypesMessage => $"File Types: {_fileTypeCount,5}";
+
         public bool CanScanStatistics
         {
             get => _canScanStatistics;
@@ -65,6 +78,7 @@ namespace DirScan.Client
                 OnPropertyChanged();
             }
         }
+
         public bool CanOpenLogFile
         {
             get => _canOpenLogFile;
@@ -75,20 +89,23 @@ namespace DirScan.Client
             }
         }
 
-        public int FileTypeCount
+        #endregion
+        
+        #region PropertyChanged EventHandler
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
         {
-            set
-            {
-                _fileTypeCount = value;
-                OnPropertyChanged( nameof( FileTypesMessage ) );
-            }
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
         }
 
-        public string FileTypesMessage => $"File Types: {_fileTypeCount,2}";
+        #endregion
 
         public void CreateSessionLogging()
         {
-            if ( !FolderSelected ) throw new ScanNotPreparedException();
+            if (!FolderSelected) throw new ScanNotPreparedException();
 
             var logHeader = "File, Size, Date Created, File Attributes";
 
@@ -170,17 +187,6 @@ namespace DirScan.Client
             }
         }
 
-        #region PropertyChanged EventHandler
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
-        {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
-        }
-
-        #endregion
 
 
     }
