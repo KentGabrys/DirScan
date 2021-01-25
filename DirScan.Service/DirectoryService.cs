@@ -62,11 +62,11 @@ namespace DirScan.Service
                     if( fi.Extension.Length > 0 )
                         fileType = new FileType
                         {
-                            Extension = fi.Extension, 
+                            Extension = fi.Extension.ToLower().Trim(), 
                             Length = fi.Length
                         };
-                    var ft = fileTypes.FirstOrDefault(f => 
-                        String.Equals(f.Extension, fileType.Extension, StringComparison.CurrentCultureIgnoreCase));
+                    var ft = fileTypes.FirstOrDefault( f => f.Extension.ToLower() == fileType.Extension.ToLower() );
+                        
                     if (ft != null)
                         ft.Length += fileType.Length;
                     else

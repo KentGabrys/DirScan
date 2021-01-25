@@ -16,7 +16,8 @@ namespace DirScan.Tests
         [SetUp]
         public void SetUp()
         {
-            File.Delete(_testFileName);
+            if( File.Exists( _testFileName ))
+                File.Delete(_testFileName);
             _logger = FileLogger.Create(_testFileName);
         }
         [Test]
@@ -41,8 +42,11 @@ namespace DirScan.Tests
         public void FileLoggerHeaderTest()
         {
             var headerFileName = $@"C:\\Temp\\DirScanTestLoggingArea\\TestLogWithHeader.log";
-            File.Delete(_testFileName);
-            File.Delete(headerFileName);
+            if(File.Exists(_testFileName))
+                File.Delete(_testFileName);
+            if(File.Exists(headerFileName))
+                File.Delete(headerFileName);
+
             const string headerString = "Header Test";
             const string testString = "This is a test";
 

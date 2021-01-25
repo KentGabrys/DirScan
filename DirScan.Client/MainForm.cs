@@ -12,8 +12,7 @@ namespace DirScan.Client
     public partial class MainForm : Form
     {
         public readonly DirScanModel _model;
-        private ILogger _logger;
-        private string _logFileName;
+
 
         public MainForm()
         {
@@ -28,34 +27,35 @@ namespace DirScan.Client
         {
             _model.Message = "Bork bork... ";
             _model.Version = Release.Version;
+            _model.CanScanStatistics = false;
             progress.Visible = false;
             status_Resize(this, EventArgs.Empty);
         }
 
-        private void CreateSessionLogging()
-        {
-            var logHeader = "File, Size, Date Created, File Attributes";
-            _logFileName =
-                Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    $@"DirectoryLog_{DateTime.Now.Year,4:0000}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}_{DateTime.Now.Hour,2:00}_{DateTime.Now.Minute,2:00}_{DateTime.Now.Second,2:00}.csv");
-
-            _logger = FileLogger.Create(_logFileName, logHeader);
-        }
 
         private void BindControlsToModel()
         {
+            // labels
             lblSelectedFolder.DataBindings.Add(
                 "Text", _model, "SelectedFolder", false, DataSourceUpdateMode.OnPropertyChanged);
 
+            lblFileTypes.DataBindings.Add(
+                "Text", _model, "FileTypesMessage", false, DataSourceUpdateMode.OnPropertyChanged );
+            
+            // status bar
             statusMessage.DataBindings.Add(
                 "Text", _model, "Message", false, DataSourceUpdateMode.OnPropertyChanged);
 
             statusVersion.DataBindings.Add(
                 "Text", _model, "Version", false, DataSourceUpdateMode.OnPropertyChanged);
 
+            //buttons
             btnOpenLogFile.DataBindings.Add(
                 "Enabled", _model, "CanOpenLogFile", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            btnScanStats.DataBindings.Add(
+                "Enabled", _model, "CanScanStatistics", false, DataSourceUpdateMode.OnPropertyChanged );
+
         }
 
         private void btnSelectFolder_Click(object sender, System.EventArgs e)
@@ -67,16 +67,17 @@ namespace DirScan.Client
                 if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
                 {
                     _model.SelectedFolder = dlg.FileName;
-                    ResetScan();
+                    PrepareScan();
                 }
             }
         }
 
-        private void ResetScan()
+        private void PrepareScan()
         {
+            _model.PrepareScan();
             lvStats.Items.Clear();
             lvFileTypes.Items.Clear();
-            CreateSessionLogging();
+            _model.CreateSessionLogging();
         }
 
         private void btnScanStats_Click(object sender, System.EventArgs e)
@@ -103,11 +104,7 @@ namespace DirScan.Client
         private void BgScanOnDoWork(object sender, DoWorkEventArgs e)
         {
             if (_model.FolderSelected)
-            {
-                var dm = new DirectoryManager();
-                dm.Scan(_model.SelectedFolder, _logger);
-                e.Result = dm.DirectoryDataSummary;
-            }
+                e.Result  = _model.ScanStatistics();
         }
 
         private void BgScanOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -118,9 +115,9 @@ namespace DirScan.Client
             status_Resize(sender, EventArgs.Empty);
 
             _model.LoadStatsListView(lvStats, lvFileTypes, e.Result as DirectoryDataSummary);
-            _model.CanOpenLogFile = true;
-            _model.Message = "Scan Complete";
+            _model.ScanComplete();
         }
+
 
         private void status_Resize(object sender, EventArgs e)
         {
@@ -134,7 +131,7 @@ namespace DirScan.Client
 
         private void btnOpenLogFile_Click(object sender, EventArgs e)
         {
-            _model.OpenLogFile(_logFileName);
+            _model.OpenLogFile();
         }
     }
 }

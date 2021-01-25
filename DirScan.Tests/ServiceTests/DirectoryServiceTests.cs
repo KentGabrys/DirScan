@@ -48,7 +48,7 @@ namespace DirScan.Tests
         [Test]
         public void ServiceScansDirectoryHasDirectoryFileSize()
         {
-            Assert.AreEqual(4227699, _dirInfo.DirectoryFileSize);
+            Assert.AreEqual( 4227705, _dirInfo.DirectoryFileSize);
         }
 
         [Test]

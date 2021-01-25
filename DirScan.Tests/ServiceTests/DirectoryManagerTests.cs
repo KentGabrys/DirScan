@@ -58,7 +58,7 @@ namespace DirScan.Tests
         {
             Assert.AreEqual(7, _dds.FileCount);
             Assert.AreEqual(1, _dds.DirectoryCount);
-            Assert.AreEqual(8455454, _dds.Size);
+            Assert.AreEqual( 8455466, _dds.Size);
         }
     }
 
