@@ -42,8 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileLogger.cs" />
+    <Compile Include="ILogDatum.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="LogDatum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DirScan.Common\DirScan.Common.csproj">

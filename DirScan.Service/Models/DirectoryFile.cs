@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
+using DirScan.Logging;
 
 namespace DirScan.Service
 {
-    public class DirectoryFile
+    public class DirectoryFile : ILogDatum
     {
         public string Name { get; set; }
         public long Size { get; set; }
@@ -19,6 +20,13 @@ namespace DirScan.Service
         {
             var attribute = FileAttribute.ToString().Replace(", ", " + ");
             return $"\"{Name}\", {Size}, {DateCreatedToString}, {attribute}";
+        }
+
+        public LogDatum ToData()
+        {
+            var attribute = FileAttribute.ToString().Replace( ", ", " + " );
+            return new LogDatum()
+                { File = Name, Size = Size, DateCreated = DateCreatedToString, Attributes = attribute };
         }
     }
 }

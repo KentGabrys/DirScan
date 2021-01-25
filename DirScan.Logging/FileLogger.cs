@@ -9,9 +9,8 @@ namespace DirScan.Logging
         private static ILogger _logger;
         private static string _logHeader;
 
-        internal FileLogger(string fileName)
+        internal FileLogger(string fileName) : this(fileName, null)
         {
-            _fileName = fileName;
         }
 
         internal FileLogger(string fileName, string logHeader)
@@ -20,6 +19,13 @@ namespace DirScan.Logging
             _logHeader = logHeader;
         }
 
+        /// <summary>
+        /// FileLogger is basically singleton when the fileName under
+        /// which it was created is the same, a change in fileName, will
+        /// force it to create a new logger instance in it's place.
+        /// </summary>
+        /// <param name="fileName">The file to which you are recording information</param>
+        /// <returns>A FileLogger instance as ILogger</returns>
         public static ILogger Create(string fileName)
         {
             if(fileName == null) 
@@ -33,6 +39,15 @@ namespace DirScan.Logging
             return _logger;
         }
 
+        /// <summary>
+        /// FileLogger is basically singleton when the fileName under
+        /// which it was created is the same, a change in fileName, will
+        /// force it to create a new logger instance in it's place.
+        /// </summary>
+        /// <param name="fileName">The file to which you are recording information</param>
+        /// <param name="logHeader">The first line of the file, presuming one is writing
+        /// a comma-delimited file, then this would be a comma-delimited header.</param>
+        /// <returns>A FileLogger instance as ILogger</returns>
         public static ILogger Create(string fileName, string logHeader)
         {
             if (fileName == null)
@@ -45,6 +60,12 @@ namespace DirScan.Logging
             return _logger;
         }
 
+        /// <summary>
+        /// Implement ILogger
+        /// </summary>
+        /// <param name="T">the type passed</param>
+        /// <param name="data">The string for a line in a text file
+        /// or an object that implements ToString()</param>
         public void Log<T>(T data)
         {
             InsureDirectoryExists();
