@@ -52,6 +52,7 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,8 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryManagerTests.cs" />
-    <Compile Include="DirectoryServiceTests.cs" />
+    <Compile Include="ClientTests\ClientDirScanModelTests.cs" />
+    <Compile Include="ClientTests\ClientFormTests.cs" />
+    <Compile Include="LoggerTests\FileLoggerTests.cs" />
+    <Compile Include="ServiceTests\DirectoryManagerTests.cs" />
+    <Compile Include="ServiceTests\DirectoryServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +79,18 @@
     <None Include="TestFiles\spoo-config.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dirscan.Client\DirScan.Client.csproj">
+      <Project>{a413f20b-8da6-4178-8319-8b1457949b25}</Project>
+      <Name>DirScan.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DirScan.Common\DirScan.Common.csproj">
+      <Project>{CAFEB191-532C-4869-86DE-26D3989195A4}</Project>
+      <Name>DirScan.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DirScan.Logging\DirScan.Logging.csproj">
+      <Project>{D1A285C4-0BFD-49DB-A7A6-FAC7B57AD716}</Project>
+      <Name>DirScan.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DirScan.Service\DirScan.Service.csproj">
       <Project>{4fbea20f-3587-40ad-823b-8a8aaf07a956}</Project>
       <Name>DirScan.Service</Name>

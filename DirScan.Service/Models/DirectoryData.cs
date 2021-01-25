@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace DirScan.Service
 {
@@ -7,7 +8,9 @@ namespace DirScan.Service
         public int FileCount { get; set; }
         public int DirectoryCount { get; set; }
         public long DirectoryFileSize { get; set; }
+        public List<FileInfo> Files { get; set; }
+        public List<DirectoryInfo> Directories { get; set; }
         public IEnumerable<FileType> FileTypes { get; set; }
-        public IEnumerable<DirectoryFile> DirectoryFiles { get; set; }
+
     }
 }

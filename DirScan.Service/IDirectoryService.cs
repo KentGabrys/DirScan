@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using DirScan.Logging;
 
 namespace DirScan.Service
 {
     public interface IDirectoryService
     {
-        DirectoryData Scan(string path);
+        DirectoryData Scan(string path, ILogger logger);
 
     }
 }

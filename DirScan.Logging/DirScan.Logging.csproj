@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4FBEA20F-3587-40AD-823B-8A8AAF07A956}</ProjectGuid>
+    <ProjectGuid>{D1A285C4-0BFD-49DB-A7A6-FAC7B57AD716}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DirScan.Service</RootNamespace>
-    <AssemblyName>DirScan.Service</AssemblyName>
+    <RootNamespace>DirScan.Logging</RootNamespace>
+    <AssemblyName>DirScan.Logging</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -39,31 +39,16 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="SystemInterface, Version=0.26.0.0, Culture=neutral, PublicKeyToken=fbc3a63dd3cf8960, processorArchitecture=MSIL">
-      <HintPath>..\packages\SystemWrapper.Interfaces.0.27.0\lib\net45\SystemInterface.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryManager.cs" />
-    <Compile Include="Models\DirectoryData.cs" />
-    <Compile Include="DirectoryService.cs" />
-    <Compile Include="Models\DirectoryDataSummary.cs" />
-    <Compile Include="Models\DirectoryFile.cs" />
-    <Compile Include="Models\FileType.cs" />
-    <Compile Include="IDirectoryService.cs" />
+    <Compile Include="FileLogger.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DirScan.Common\DirScan.Common.csproj">
       <Project>{CAFEB191-532C-4869-86DE-26D3989195A4}</Project>
       <Name>DirScan.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DirScan.Logging\DirScan.Logging.csproj">
-      <Project>{D1A285C4-0BFD-49DB-A7A6-FAC7B57AD716}</Project>
-      <Name>DirScan.Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

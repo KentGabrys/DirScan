@@ -5,11 +5,11 @@ using DirScan.Common;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DirScan.Service")]
+[assembly: AssemblyTitle("Dirscan.Client")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DirScan.Service")]
+[assembly: AssemblyProduct("Dirscan.Client")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using DirScan.Common;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4fbea20f-3587-40ad-823b-8a8aaf07a956")]
+[assembly: Guid("a413f20b-8da6-4178-8319-8b1457949b25")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,4 +1,7 @@
-﻿namespace DirScan.Service
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace DirScan.Service
 {
     public class DirectoryDataSummary
     {
@@ -21,6 +24,21 @@
                 return $"{Size,5} Bytes";
             }
 
+        }
+
+        public List<FileType> FileTypes { get; set; } = new List<FileType>();
+
+        public void MergeFileTypes(IList<FileType> fileTypes)
+        {
+            foreach (var f in fileTypes)
+            {
+                var fileType = new FileType { Extension = f.Extension.Substring(1), Length = f.Length };
+                var ft = FileTypes.FirstOrDefault(o => o.Extension == fileType.Extension);
+                if (ft != null)
+                    ft.Length += fileType.Length;
+                else
+                    FileTypes.Add(fileType);
+            }
         }
     }
 }

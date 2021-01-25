@@ -1,26 +1,34 @@
-﻿namespace DirScan.Service
+﻿using System;
+using System.IO;
+using System.Linq;
+using DirScan.Logging;
+
+namespace DirScan.Service
 {
     public class DirectoryManager
     {
-        public void Scan(string path)
+        public void Scan(string path, ILogger logger)
         {
-            ScanPath(path);
+            if (path == null) throw new ArgumentNullException(nameof(path));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+
+            ScanPath(path, logger);
         }
 
-        private void ScanPath(string path)
+        private void ScanPath(string path, ILogger logger)
         {
             var dirSvc = new DirectoryService();
-            var dd = dirSvc.Scan(path);
+            var dd = dirSvc.Scan(path, logger);
 
             if (dd.DirectoryCount > 0)
-                foreach (var dir in dd.DirectoryFiles)
-                    if (!dir.IsFile)
-                        ScanPath(dir.Name);
+                foreach (var dir in dd.Directories)
+                    ScanPath(dir.FullName, logger );
 
             DirectoryDataSummary.DirectoryCount += dd.DirectoryCount;
             DirectoryDataSummary.FileCount += dd.FileCount;
-            foreach (var file in dd.DirectoryFiles)
-                DirectoryDataSummary.Size += file.Size;
+            DirectoryDataSummary.MergeFileTypes(dd.FileTypes.ToList());
+            foreach (var file in dd.Files)
+                DirectoryDataSummary.Size += new FileInfo(file.FullName).Length;
         }
 
         public DirectoryDataSummary DirectoryDataSummary { get; set; } = new DirectoryDataSummary();

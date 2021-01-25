@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace DirScan.Service
 {
@@ -7,6 +8,17 @@ namespace DirScan.Service
         public string Name { get; set; }
         public long Size { get; set; }
         public DateTimeOffset DateCreated { get; set; }
-        public bool IsFile { get; set; }
+
+        private string DateCreatedToString => 
+            $"{DateCreated.DateTime.Month,2:00}-{DateCreated.DateTime.Day,2:00}-{DateCreated.DateTime.Year, 4:0000}";
+
+//        public bool IsFile { get; set; }
+        public FileAttributes FileAttribute { get; set; }
+
+        public override string ToString()
+        {
+            var attribute = FileAttribute.ToString().Replace(", ", " + ");
+            return $"\"{Name}\", {Size}, {DateCreatedToString}, {attribute}";
+        }
     }
 }

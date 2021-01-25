@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using DirScan.Service;
 using NUnit.Framework;
@@ -10,12 +11,20 @@ namespace DirScan.Tests
     {
         private DirectoryService _svc;
         private DirectoryData _dirInfo;
+        private int _fileCount = 1;
 
         [SetUp]
         public void SetUp()
-        { 
+        {
+            var logFile =
+                Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    $@"DirectoryLog_{DateTime.Now.Year,4:0000}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}_{DateTime.Now.Hour,2:00}-{DateTime.Now.Minute,2:00}-{_fileCount++}.log");
+
+            var logger = DirScan.Logging.FileLogger.Create(logFile);
+
             _svc = new DirectoryService();
-            _dirInfo = _svc.Scan("c:\\Temp\\DirScanTestArea");
+            _dirInfo = _svc.Scan("c:\\Temp\\DirScanTestArea", logger);
         }
 
         [Test]
@@ -54,10 +63,14 @@ namespace DirScan.Tests
         [Test]
         public void ServiceScansDirectoryHasDirectoryFilesCount()
         {
-            Assert.AreEqual(4, _dirInfo.DirectoryFiles.Count());
+            Assert.AreEqual(1, _dirInfo.Directories.Count());
+            Assert.AreEqual(3, _dirInfo.Files.Count);
 
-            foreach (var df in _dirInfo.DirectoryFiles)
-                Console.WriteLine($"{df.Name,40} :  {df.IsFile,6} {df.DateCreated,12:MM/dd/yyyy} {df.Size} ");
+            foreach (var d in _dirInfo.Directories)
+                Console.WriteLine($"{d.Name,40}");
+
+            foreach (var f in _dirInfo.Files)
+                Console.WriteLine($"{f.Name,40} : {f.Length,15}");
         }
 
 
