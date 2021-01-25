@@ -21,7 +21,7 @@ namespace DirScan.Tests
                     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                     $@"DirectoryLog_{DateTime.Now.Year,4:0000}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}_{DateTime.Now.Hour,2:00}-{DateTime.Now.Minute,2:00}-{_fileCount++}.log");
 
-            var logger = DirScan.Logging.FileLogger.Create(logFile);
+            var logger = Logging.FileLogger.Create(logFile);
 
             _svc = new DirectoryService();
             _dirInfo = _svc.Scan("c:\\Temp\\DirScanTestArea", logger);

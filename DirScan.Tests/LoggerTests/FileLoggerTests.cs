@@ -37,5 +37,21 @@ namespace DirScan.Tests
             Assert.AreEqual(testString + Environment.NewLine, fileContent );
         }
 
+        [Test]
+        public void FileLoggerHeaderTest()
+        {
+            var headerFileName = $@"C:\\Temp\\DirScanTestLoggingArea\\TestLogWithHeader.log";
+            File.Delete(_testFileName);
+            File.Delete(headerFileName);
+            const string headerString = "Header Test";
+            const string testString = "This is a test";
+
+            var log = FileLogger.Create(headerFileName , headerString);
+            log.Log(testString);
+
+            var fileContent = File.ReadAllText(headerFileName);
+            Assert.AreEqual(headerString + Environment.NewLine + testString + Environment.NewLine, fileContent);
+
+        }
     }
 }

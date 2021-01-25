@@ -36,13 +36,13 @@ namespace DirScan.Client
             this.colDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colScanValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.status = new System.Windows.Forms.StatusStrip();
+            this.statusMessage = new DirScan.Client.BindableToolStripStatusLabel();
+            this.progress = new System.Windows.Forms.ToolStripProgressBar();
+            this.statusVersion = new DirScan.Client.BindableToolStripStatusLabel();
             this.lvFileTypes = new System.Windows.Forms.ListView();
             this.colType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblFileTypes = new System.Windows.Forms.Label();
-            this.progress = new System.Windows.Forms.ToolStripProgressBar();
-            this.statusMessage = new DirScan.Client.BindableToolStripStatusLabel();
-            this.statusVersion = new DirScan.Client.BindableToolStripStatusLabel();
             this.btnOpenLogFile = new System.Windows.Forms.Button();
             this.status.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +68,7 @@ namespace DirScan.Client
             this.lblSelectedFolder.Location = new System.Drawing.Point(150, 3);
             this.lblSelectedFolder.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSelectedFolder.Name = "lblSelectedFolder";
-            this.lblSelectedFolder.Size = new System.Drawing.Size(470, 34);
+            this.lblSelectedFolder.Size = new System.Drawing.Size(473, 34);
             this.lblSelectedFolder.TabIndex = 1;
             this.lblSelectedFolder.Text = "Folder Selected";
             this.lblSelectedFolder.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -99,7 +99,7 @@ namespace DirScan.Client
             this.lvStats.Location = new System.Drawing.Point(150, 50);
             this.lvStats.Margin = new System.Windows.Forms.Padding(2);
             this.lvStats.Name = "lvStats";
-            this.lvStats.Size = new System.Drawing.Size(470, 130);
+            this.lvStats.Size = new System.Drawing.Size(473, 130);
             this.lvStats.TabIndex = 3;
             this.lvStats.UseCompatibleStateImageBehavior = false;
             this.lvStats.View = System.Windows.Forms.View.Details;
@@ -121,12 +121,37 @@ namespace DirScan.Client
             this.statusMessage,
             this.progress,
             this.statusVersion});
-            this.status.Location = new System.Drawing.Point(0, 419);
+            this.status.Location = new System.Drawing.Point(0, 567);
             this.status.Name = "status";
             this.status.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
-            this.status.Size = new System.Drawing.Size(624, 22);
+            this.status.Size = new System.Drawing.Size(627, 28);
             this.status.TabIndex = 4;
             this.status.Resize += new System.EventHandler(this.status_Resize);
+            // 
+            // statusMessage
+            // 
+            this.statusMessage.AutoSize = false;
+            this.statusMessage.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusMessage.Name = "statusMessage";
+            this.statusMessage.Size = new System.Drawing.Size(300, 23);
+            this.statusMessage.Text = "Message";
+            this.statusMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // progress
+            // 
+            this.progress.AutoSize = false;
+            this.progress.MarqueeAnimationSpeed = 0;
+            this.progress.Name = "progress";
+            this.progress.Size = new System.Drawing.Size(200, 22);
+            // 
+            // statusVersion
+            // 
+            this.statusVersion.AutoSize = false;
+            this.statusVersion.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusVersion.Name = "statusVersion";
+            this.statusVersion.Size = new System.Drawing.Size(100, 23);
+            this.statusVersion.Text = "Version";
+            this.statusVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lvFileTypes
             // 
@@ -143,7 +168,7 @@ namespace DirScan.Client
             this.lvFileTypes.Location = new System.Drawing.Point(150, 220);
             this.lvFileTypes.Margin = new System.Windows.Forms.Padding(2);
             this.lvFileTypes.Name = "lvFileTypes";
-            this.lvFileTypes.Size = new System.Drawing.Size(470, 185);
+            this.lvFileTypes.Size = new System.Drawing.Size(473, 339);
             this.lvFileTypes.TabIndex = 5;
             this.lvFileTypes.UseCompatibleStateImageBehavior = false;
             this.lvFileTypes.View = System.Windows.Forms.View.Details;
@@ -166,39 +191,16 @@ namespace DirScan.Client
             this.lblFileTypes.Location = new System.Drawing.Point(149, 182);
             this.lblFileTypes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFileTypes.Name = "lblFileTypes";
-            this.lblFileTypes.Size = new System.Drawing.Size(470, 34);
+            this.lblFileTypes.Size = new System.Drawing.Size(473, 34);
             this.lblFileTypes.TabIndex = 6;
             this.lblFileTypes.Text = "File Types";
             this.lblFileTypes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // progress
-            // 
-            this.progress.AutoSize = false;
-            this.progress.MarqueeAnimationSpeed = 0;
-            this.progress.Name = "progress";
-            this.progress.Size = new System.Drawing.Size(200, 16);
-            // 
-            // statusMessage
-            // 
-            this.statusMessage.AutoSize = false;
-            this.statusMessage.Name = "statusMessage";
-            this.statusMessage.Size = new System.Drawing.Size(300, 17);
-            this.statusMessage.Text = "Message";
-            this.statusMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // statusVersion
-            // 
-            this.statusVersion.AutoSize = false;
-            this.statusVersion.Name = "statusVersion";
-            this.statusVersion.Size = new System.Drawing.Size(100, 17);
-            this.statusVersion.Text = "Version";
-            this.statusVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnOpenLogFile
             // 
             this.btnOpenLogFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnOpenLogFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenLogFile.Location = new System.Drawing.Point(3, 371);
+            this.btnOpenLogFile.Location = new System.Drawing.Point(3, 525);
             this.btnOpenLogFile.Margin = new System.Windows.Forms.Padding(2);
             this.btnOpenLogFile.Name = "btnOpenLogFile";
             this.btnOpenLogFile.Size = new System.Drawing.Size(143, 34);
@@ -211,7 +213,7 @@ namespace DirScan.Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 441);
+            this.ClientSize = new System.Drawing.Size(627, 595);
             this.Controls.Add(this.btnOpenLogFile);
             this.Controls.Add(this.lblFileTypes);
             this.Controls.Add(this.lvFileTypes);
@@ -222,6 +224,7 @@ namespace DirScan.Client
             this.Controls.Add(this.btnSelectFolder);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DirScan";
             this.status.ResumeLayout(false);
             this.status.PerformLayout();
