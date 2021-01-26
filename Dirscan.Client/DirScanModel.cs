@@ -6,8 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using AutoMapper;
 using DirScan.Client.Annotations;
 using DirScan.Common;
+using DirScan.Data;
 using DirScan.Logging;
 using DirScan.Service;
 
@@ -23,6 +25,7 @@ namespace DirScan.Client
         private bool _canScanStatistics;
         private string _logFileName;
         private ILogger _logger;
+        private LoggingType _loggingType;
 
         #region Properties
 
@@ -89,8 +92,20 @@ namespace DirScan.Client
             }
         }
 
+        public LoggingType LoggingType
+        {
+            get => _loggingType;
+            set
+            {
+                _loggingType = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ConnectionString { get; set; }
+
         #endregion
-        
+
         #region PropertyChanged EventHandler
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -120,6 +135,13 @@ namespace DirScan.Client
             _logger = FileLogger.Create( _logFileName, logHeader );
         }
 
+        public void CreateSessionSqlLogging()
+        {
+            _logger = new SqlLogger(
+                new DirScanRepository( ConnectionString ),
+                new Mapper( new MapperConfiguration( a => a.AddProfile( new MappingProfile() ) ) )
+           );
+        }
         public void PrepareScan()
         {
             CanOpenLogFile = false;
@@ -168,7 +190,8 @@ namespace DirScan.Client
 
         public void ScanComplete()
         {
-            CanOpenLogFile = true;
+            if (_logger is FileLogger)
+                CanOpenLogFile = true;
             Message = "Scan Complete";
         }
 
