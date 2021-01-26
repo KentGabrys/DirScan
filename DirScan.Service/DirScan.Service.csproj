@@ -55,6 +55,14 @@
       <Project>{CAFEB191-532C-4869-86DE-26D3989195A4}</Project>
       <Name>DirScan.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DirScan.Data\DirScan.Data.csproj">
+      <Project>{FF12A90E-C9A2-4C40-AF0B-4DCFDC3C4908}</Project>
+      <Name>DirScan.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DirScan.ErrorLogging\DirScan.ErrorLogging.csproj">
+      <Project>{FA12B3F9-EE37-4028-B6E2-76E8BE5FDF4B}</Project>
+      <Name>DirScan.ErrorLogging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DirScan.Logging\DirScan.Logging.csproj">
       <Project>{D1A285C4-0BFD-49DB-A7A6-FAC7B57AD716}</Project>
       <Name>DirScan.Logging</Name>

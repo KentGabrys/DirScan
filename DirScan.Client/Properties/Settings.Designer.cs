@@ -22,5 +22,29 @@ namespace DirScan.Client.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("FileLogger")]
+        public global::DirScan.Logging.LoggingType LoggerPreference {
+            get {
+                return ((global::DirScan.Logging.LoggingType)(this["LoggerPreference"]));
+            }
+            set {
+                this["LoggerPreference"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=BL56A;Integrated Security=SSPI;database=EDWin_Dev;Connect Timeout=30")]
+        public string ConnectionString {
+            get {
+                return ((string)(this["ConnectionString"]));
+            }
+            set {
+                this["ConnectionString"] = value;
+            }
+        }
     }
 }

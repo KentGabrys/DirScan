@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
+using System.Configuration;
 using System.Windows.Forms;
 using DirScan.Common;
 using DirScan.Logging;
@@ -28,6 +28,8 @@ namespace DirScan.Client
             _model.Message = "Bork bork... ";
             _model.Version = Release.Version;
             _model.CanScanStatistics = false;
+            _model.LoggingType = Properties.Settings.Default.LoggerPreference;
+            _model.ConnectionString = Properties.Settings.Default.ConnectionString;
             progress.Visible = false;
             status_Resize(this, EventArgs.Empty);
         }
@@ -45,7 +47,8 @@ namespace DirScan.Client
             // status bar
             statusMessage.DataBindings.Add(
                 "Text", _model, "Message", false, DataSourceUpdateMode.OnPropertyChanged);
-
+            statusLogType.DataBindings.Add(
+                "Text", _model, "LoggingType", false, DataSourceUpdateMode.OnPropertyChanged );
             statusVersion.DataBindings.Add(
                 "Text", _model, "Version", false, DataSourceUpdateMode.OnPropertyChanged);
 
@@ -77,7 +80,15 @@ namespace DirScan.Client
             _model.PrepareScan();
             lvStats.Items.Clear();
             lvFileTypes.Items.Clear();
-            _model.CreateSessionLogging();
+            switch ( _model.LoggingType )
+            {
+                case LoggingType.FileLogger:
+                    _model.CreateSessionLogging();
+                    break;
+                case LoggingType.SqlLogger:
+                    _model.CreateSessionSqlLogging();
+                    break;
+            }
         }
 
         private void btnScanStats_Click(object sender, System.EventArgs e)
@@ -124,14 +135,36 @@ namespace DirScan.Client
             var formWidth = this.Width;
             var statusControlsWidthMax = formWidth - 40;
             if (progress.Visible)
-                statusMessage.Width = statusControlsWidthMax - progress.Width - statusVersion.Width;
+                statusMessage.Width = statusControlsWidthMax - progress.Width - statusLogType.Width - statusVersion.Width;
             else
-                statusMessage.Width = statusControlsWidthMax - statusVersion.Width;
+                statusMessage.Width = statusControlsWidthMax - statusLogType.Width - statusVersion.Width;
         }
 
         private void btnOpenLogFile_Click(object sender, EventArgs e)
         {
             _model.OpenLogFile();
+        }
+
+        private void miFilePreferences_Click( object sender, EventArgs e )
+        {
+            using ( var form = new PreferenceForm() )
+            {
+                form.LoggingType = _model.LoggingType;
+                if ( !string.IsNullOrEmpty( Properties.Settings.Default.ConnectionString ) )
+                    form.ConnectionString = Properties.Settings.Default.ConnectionString;
+                else 
+                    form.ConnectionString = ConfigurationManager.ConnectionStrings["logConnection"].ConnectionString;
+                
+                if ( form.ShowDialog() == DialogResult.OK )
+                {
+                    _model.LoggingType = form.LoggingType;
+                    Properties.Settings.Default.LoggerPreference = form.LoggingType;
+                    if ( _model.LoggingType == LoggingType.SqlLogger )
+                        Properties.Settings.Default.ConnectionString = form.ConnectionString;
+
+                    Properties.Settings.Default.Save();
+                }
+            }
         }
     }
 }

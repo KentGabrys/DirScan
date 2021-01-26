@@ -3,5 +3,6 @@
     public interface ILogger
     {
         void Log<T>(T data);
+        void SaveLogs();
     }
 }

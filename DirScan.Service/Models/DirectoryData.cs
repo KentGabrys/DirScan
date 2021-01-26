@@ -12,5 +12,7 @@ namespace DirScan.Service
         public List<DirectoryInfo> Directories { get; set; }
         public IEnumerable<FileType> FileTypes { get; set; }
 
+        public bool CanBeProcessed => DirectoryCount > 0 && FileTypes != null;
+
     }
 }

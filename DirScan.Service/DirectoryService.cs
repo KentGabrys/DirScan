@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DirScan.ErrorLogging;
 using DirScan.Logging;
 
 namespace DirScan.Service
@@ -12,26 +13,35 @@ namespace DirScan.Service
 
         public DirectoryData Scan(string path, ILogger logger)
         {
-
-            _logger = logger;
-
-            var dir = new DirectoryInfo(path);
-            var dirs = dir.EnumerateDirectories("*.*").ToList();
-            var files = dir.EnumerateFiles("*.*").ToList();
-            var fileTypes = GetFileTypes(files);
-
-            LogDirectoryFiles(dirs, files);
-
-            var dirData = new DirectoryData()
+            try
             {
-                Directories = dirs,
-                Files = files,
-                DirectoryCount = dirs.Count(),
-                FileCount = files.Count(),
-                DirectoryFileSize = files.Sum(fi => fi.Length),
-                FileTypes = fileTypes,
-            };
-            return dirData;
+
+                _logger = logger;
+
+                var dir = new DirectoryInfo( path );
+                var dirs = dir.EnumerateDirectories( "*.*" ).ToList();
+                var files = dir.EnumerateFiles( "*.*" ).ToList();
+                var fileTypes = GetFileTypes( files );
+
+                LogDirectoryFiles( dirs, files );
+                _logger.SaveLogs();
+
+                var dirData = new DirectoryData()
+                {
+                    Directories = dirs,
+                    Files = files,
+                    DirectoryCount = dirs.Count(),
+                    FileCount = files.Count(),
+                    DirectoryFileSize = files.Sum( fi => fi.Length ),
+                    FileTypes = fileTypes,
+                };
+                return dirData;
+            }
+            catch ( Exception exception )
+            {
+                ErrorLog.Log( exception, $"An exception occurred attempting to scan {path}." );
+                return new DirectoryData();
+            }
         }
 
         private void LogDirectoryFiles(List<DirectoryInfo> dirs, List<FileInfo> files)

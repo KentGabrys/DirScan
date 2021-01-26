@@ -20,15 +20,18 @@ namespace DirScan.Service
             var dirSvc = new DirectoryService();
             var dd = dirSvc.Scan(path, logger);
 
-            if (dd.DirectoryCount > 0)
-                foreach (var dir in dd.Directories)
-                    ScanPath(dir.FullName, logger );
+            if ( dd.CanBeProcessed )
+            {
+                if ( dd.DirectoryCount > 0 )
+                    foreach ( var dir in dd.Directories )
+                        ScanPath( dir.FullName, logger );
 
-            DirectoryDataSummary.DirectoryCount += dd.DirectoryCount;
-            DirectoryDataSummary.FileCount += dd.FileCount;
-            DirectoryDataSummary.MergeFileTypes(dd.FileTypes.ToList());
-            foreach (var file in dd.Files)
-                DirectoryDataSummary.Size += new FileInfo(file.FullName).Length;
+                DirectoryDataSummary.DirectoryCount += dd.DirectoryCount;
+                DirectoryDataSummary.FileCount += dd.FileCount;
+                DirectoryDataSummary.MergeFileTypes( dd.FileTypes.ToList() );
+                foreach ( var file in dd.Files )
+                    DirectoryDataSummary.Size += new FileInfo( file.FullName ).Length;
+            }
         }
 
         public DirectoryDataSummary DirectoryDataSummary { get; set; } = new DirectoryDataSummary();

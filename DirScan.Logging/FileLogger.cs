@@ -75,6 +75,11 @@ namespace DirScan.Logging
                 fs.Write(data.ToString() + Environment.NewLine);
         }
 
+        public void SaveLogs()
+        {
+            // nothing to do
+        }
+
         private void WriteHeader()
         {
             using (var fs = File.AppendText(_fileName))
