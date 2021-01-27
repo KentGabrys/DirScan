@@ -7,8 +7,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using AutoMapper;
-using DirScan.Client.Annotations;
+using DirScan.Client.Properties;
 using DirScan.Common;
+using DirScan.Common.Models;
 using DirScan.Data;
 using DirScan.Logging;
 using DirScan.Service;
@@ -26,6 +27,13 @@ namespace DirScan.Client
         private string _logFileName;
         private ILogger _logger;
         private LoggingType _loggingType;
+        
+        private readonly Mapper _mapper;
+
+        public DirScanModel()
+        {
+            _mapper = new Mapper( new MapperConfiguration( a => a.AddProfile( new MappingProfile() ) ) );
+        }
 
         #region Properties
 
@@ -122,7 +130,7 @@ namespace DirScan.Client
         {
             if (!FolderSelected) throw new ScanNotPreparedException();
 
-            var logHeader = "File, Size, Date Created, File Attributes";
+            const string logHeader = "File, Size, Date Created, Date Last Modified, Owner, File Attributes";
 
             var fi = new FileInfo( SelectedFolder );
             var fileName = $"DirScanLogging\\{fi.Name}_DirScan_";
@@ -138,9 +146,7 @@ namespace DirScan.Client
         public void CreateSessionSqlLogging()
         {
             _logger = new SqlLogger(
-                new DirScanRepository( ConnectionString ),
-                new Mapper( new MapperConfiguration( a => a.AddProfile( new MappingProfile() ) ) )
-           );
+                new DirScanRepository( ConnectionString ), _mapper );
         }
         public void PrepareScan()
         {
@@ -151,8 +157,8 @@ namespace DirScan.Client
         }
         public DirectoryDataSummary ScanStatistics()
         {
-            var dm = new DirectoryManager();
-            dm.Scan( SelectedFolder, _logger );
+            var dm = new DirectoryManager( _logger, _mapper );
+            dm.Scan( SelectedFolder );
             return dm.DirectoryDataSummary;
         }
 
