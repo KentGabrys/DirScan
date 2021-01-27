@@ -19,6 +19,9 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <FipsCompliant>true</FipsCompliant>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="DirScan.wxs" />
   </ItemGroup>
