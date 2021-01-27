@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DirScan.Service
+namespace DirScan.Common.Models
 {
     public class DirectoryDataSummary
     {

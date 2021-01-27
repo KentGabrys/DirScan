@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using System.Windows.Forms;
 using DirScan.Logging;
 
@@ -115,6 +114,8 @@ namespace DirScan.Client
                     [File] varchar(max) not null,
                     [Size] bigint not null,
                     [DateCreated] varchar(20) not null,
+					[DateLastModified] varchar(20) not null,
+					[Owner] varchar(255) not null,
                     [FileAttributes] varchar(512) not null,
                     [User_Id] [int] not null,
                     [Process_Date] [datetime] not null,
@@ -130,8 +131,7 @@ namespace DirScan.Client
                 GO
 
                 alter table [dbo].[DirScanLog] check constraint [R__FK__DirScanLog__USER_BL__USER_ID]
-                GO
-               " );
+                GO" );
         }
     }
 }

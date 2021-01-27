@@ -35,10 +35,10 @@ namespace DirScan.Client
             this.txtConnectionString = new System.Windows.Forms.TextBox();
             this.lblConnectionString = new System.Windows.Forms.Label();
             this.gbSqlLoggerConfig = new System.Windows.Forms.GroupBox();
+            this.btnTableSqlClipboard = new System.Windows.Forms.Button();
+            this.btnTestConnection = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnTestConnection = new System.Windows.Forms.Button();
-            this.btnTableSqlClipboard = new System.Windows.Forms.Button();
             this.gbLogger.SuspendLayout();
             this.gbSqlLoggerConfig.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +49,7 @@ namespace DirScan.Client
             this.gbLogger.Controls.Add(this.rbFileLogger);
             this.gbLogger.Location = new System.Drawing.Point(12, 12);
             this.gbLogger.Name = "gbLogger";
-            this.gbLogger.Size = new System.Drawing.Size(138, 74);
+            this.gbLogger.Size = new System.Drawing.Size(167, 74);
             this.gbLogger.TabIndex = 0;
             this.gbLogger.TabStop = false;
             this.gbLogger.Text = "Logger";
@@ -59,10 +59,10 @@ namespace DirScan.Client
             this.rbSqlLogger.AutoSize = true;
             this.rbSqlLogger.Location = new System.Drawing.Point(27, 43);
             this.rbSqlLogger.Name = "rbSqlLogger";
-            this.rbSqlLogger.Size = new System.Drawing.Size(82, 17);
+            this.rbSqlLogger.Size = new System.Drawing.Size(116, 17);
             this.rbSqlLogger.TabIndex = 1;
             this.rbSqlLogger.TabStop = true;
-            this.rbSqlLogger.Text = "SQL Logger";
+            this.rbSqlLogger.Text = "SQL Server Logger";
             this.rbSqlLogger.UseVisualStyleBackColor = true;
             this.rbSqlLogger.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
             // 
@@ -116,6 +116,28 @@ namespace DirScan.Client
             this.gbSqlLoggerConfig.TabStop = false;
             this.gbSqlLoggerConfig.Text = "SQL Logger Configuration";
             // 
+            // btnTableSqlClipboard
+            // 
+            this.btnTableSqlClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTableSqlClipboard.Location = new System.Drawing.Point(6, 93);
+            this.btnTableSqlClipboard.Name = "btnTableSqlClipboard";
+            this.btnTableSqlClipboard.Size = new System.Drawing.Size(428, 23);
+            this.btnTableSqlClipboard.TabIndex = 6;
+            this.btnTableSqlClipboard.Text = "Put Sql Required To Create Logging Table On Clipboard";
+            this.btnTableSqlClipboard.UseVisualStyleBackColor = true;
+            this.btnTableSqlClipboard.Click += new System.EventHandler(this.btnTableSqlClipboard_Click);
+            // 
+            // btnTestConnection
+            // 
+            this.btnTestConnection.Location = new System.Drawing.Point(6, 47);
+            this.btnTestConnection.Name = "btnTestConnection";
+            this.btnTestConnection.Size = new System.Drawing.Size(88, 41);
+            this.btnTestConnection.TabIndex = 5;
+            this.btnTestConnection.Text = "Test Connection";
+            this.btnTestConnection.UseVisualStyleBackColor = true;
+            this.btnTestConnection.Click += new System.EventHandler(this.btnTestConnection_Click);
+            // 
             // btnSave
             // 
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -135,28 +157,6 @@ namespace DirScan.Client
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // btnTestConnection
-            // 
-            this.btnTestConnection.Location = new System.Drawing.Point(6, 47);
-            this.btnTestConnection.Name = "btnTestConnection";
-            this.btnTestConnection.Size = new System.Drawing.Size(88, 41);
-            this.btnTestConnection.TabIndex = 5;
-            this.btnTestConnection.Text = "Test Connection";
-            this.btnTestConnection.UseVisualStyleBackColor = true;
-            this.btnTestConnection.Click += new System.EventHandler(this.btnTestConnection_Click);
-            // 
-            // btnTableSqlClipboard
-            // 
-            this.btnTableSqlClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTableSqlClipboard.Location = new System.Drawing.Point(6, 93);
-            this.btnTableSqlClipboard.Name = "btnTableSqlClipboard";
-            this.btnTableSqlClipboard.Size = new System.Drawing.Size(428, 23);
-            this.btnTableSqlClipboard.TabIndex = 6;
-            this.btnTableSqlClipboard.Text = "Put Sql Required To Create Logging Table On Clipboard";
-            this.btnTableSqlClipboard.UseVisualStyleBackColor = true;
-            this.btnTableSqlClipboard.Click += new System.EventHandler(this.btnTableSqlClipboard_Click);
             // 
             // PreferenceForm
             // 

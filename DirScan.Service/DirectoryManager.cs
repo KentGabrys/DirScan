@@ -1,30 +1,40 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using AutoMapper;
+using DirScan.Common.Models;
 using DirScan.Logging;
 
 namespace DirScan.Service
 {
     public class DirectoryManager
     {
-        public void Scan(string path, ILogger logger)
-        {
-            if (path == null) throw new ArgumentNullException(nameof(path));
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
+        private readonly ILogger _logger;
+        private readonly IMapper _mapper;
 
-            ScanPath(path, logger);
+        public DirectoryManager( ILogger logger, IMapper mapper )
+        {
+            _logger = logger ?? throw new ArgumentNullException( nameof( _logger ) );
+            _mapper = mapper ?? throw new ArgumentNullException( nameof( _mapper ) );
         }
 
-        private void ScanPath(string path, ILogger logger)
+        public void Scan(string path)
         {
-            var dirSvc = new DirectoryService();
-            var dd = dirSvc.Scan(path, logger);
+            if (path == null) throw new ArgumentNullException(nameof(path));
+
+            ScanPath( path );
+        }
+
+        private void ScanPath(string path )
+        {
+            var dirSvc = new DirectoryService( _logger, _mapper );
+            var dd = dirSvc.Scan(path);
 
             if ( dd.CanBeProcessed )
             {
                 if ( dd.DirectoryCount > 0 )
                     foreach ( var dir in dd.Directories )
-                        ScanPath( dir.FullName, logger );
+                        ScanPath( dir.FullName );
 
                 DirectoryDataSummary.DirectoryCount += dd.DirectoryCount;
                 DirectoryDataSummary.FileCount += dd.FileCount;

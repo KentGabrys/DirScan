@@ -7,6 +7,8 @@
         public string File { get; set; }
         public long Size { get; set; }
         public string DateCreated { get; set; }
+        public string DateLastModified { get; set; }
+        public string Owner{ get; set; }
 
         public string Attributes
         {
@@ -21,7 +23,7 @@
 
         public override string ToString()
         {
-            return $"\"{File}\", {Size}, {DateCreated}, {Attributes}";
+            return $"\"{File}\", {Size}, {DateCreated}, {DateLastModified}, {Owner}, {Attributes}";
         }
     }
 

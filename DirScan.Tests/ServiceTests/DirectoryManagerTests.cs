@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using AutoMapper;
+using DirScan.Common;
+using DirScan.Common.Models;
 using DirScan.Logging;
 using DirScan.Service;
 using NUnit.Framework;
@@ -17,6 +20,7 @@ namespace DirScan.Tests
         [SetUp]
         public void SetUp()
         {
+            var mapper = new Mapper( new MapperConfiguration( a => a.AddProfile( new MappingProfile() ) ) );
             var logTestPath = "C:\\Temp\\DirScanTestArea";
             var logFile =
                 Path.Combine(
@@ -24,8 +28,8 @@ namespace DirScan.Tests
                     $@"DirectoryLog_{DateTime.Now.Year,4:0000}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}_{DateTime.Now.Hour,2:00}-{DateTime.Now.Minute,2:00}-{_fileCount++, 2:00}.log");
             var logger = FileLogger.Create(logFile);
 
-            _dm = new DirectoryManager();
-            _dm.Scan(logTestPath, logger);
+            _dm = new DirectoryManager( logger, mapper );
+            _dm.Scan(logTestPath);
             _dds = _dm.DirectoryDataSummary;
         }
 

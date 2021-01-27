@@ -71,7 +71,14 @@
         <File Id="DirScanCommonDLL" Source="$(var.Resources)DirScan.Common.dll" KeyPath="yes">
         </File>
       </Component>
-
+      <Component Id="DirScanDataDLL" Guid="DDFC1D5F-D319-4C72-9641-48B22A4357A9">
+        <File Id="DirScanDataDLL" Source="$(var.Resources)DirScan.Data.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <Component Id="DirScanErrorLoggingDLL" Guid="FF7D34DF-5167-4527-9D4F-81CCAD40B68A">
+        <File Id="DirScanErrorLoggingDLL" Source="$(var.Resources)DirScan.ErrorLogging.dll" KeyPath="yes">
+        </File>
+      </Component>
       <Component Id="DirScanLoggingDLL" Guid="B09A4A71-B1DE-44C9-B29F-C4AB2002DC65">
         <File Id="DirScanLoggingDLL" Source="$(var.Resources)DirScan.Logging.dll" KeyPath="yes">
         </File>

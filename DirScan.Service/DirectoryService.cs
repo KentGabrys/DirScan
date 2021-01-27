@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AutoMapper;
+using DirScan.Common.Models;
 using DirScan.ErrorLogging;
 using DirScan.Logging;
 
 namespace DirScan.Service
 {
-    public class DirectoryService : IDirectoryService
+    public class DirectoryService : DirectoryServiceBase
     {
-        private ILogger _logger;
+        public DirectoryService( ILogger logger, IMapper mapper) 
+            : base( logger, mapper )
+        {
+        }
 
-        public DirectoryData Scan(string path, ILogger logger)
+        public override DirectoryData Scan(string path)
         {
             try
             {
-
-                _logger = logger;
-
                 var dir = new DirectoryInfo( path );
                 var dirs = dir.EnumerateDirectories( "*.*" ).ToList();
                 var files = dir.EnumerateFiles( "*.*" ).ToList();
@@ -46,44 +48,20 @@ namespace DirScan.Service
 
         private void LogDirectoryFiles(List<DirectoryInfo> dirs, List<FileInfo> files)
         {
-            foreach (var di in dirs)
-            {
-                
-                var df = new DirectoryFile {Name = di.FullName, DateCreated = di.CreationTime, FileAttribute = di.Attributes};
-                _logger.Log(df);
-            }
+            // foreach (var di in dirs)
+            // {
+            //     var df = _mapper.Map<DirectoryFile>( di );
+            //     _logger.Log(df);
+            // }
 
             foreach (var f in files)
-            { 
-                var df = new DirectoryFile {Name = f.FullName, DateCreated = f.CreationTime, Size = f.Length, FileAttribute = f.Attributes};
+            {
+                var df = _mapper.Map<DirectoryFile>( f );
                 _logger.Log(df);
             }
 
         }
 
-        private IEnumerable<FileType> GetFileTypes(List<FileInfo> files)
-        {
-            var fileTypes = new List<FileType>();
-            foreach (var fi in files)
-            {
-                if (fi.Attributes != FileAttributes.Directory)
-                {
-                    var fileType = new FileType{ Extension = "None", Length = fi.Length };
-                    if( fi.Extension.Length > 0 )
-                        fileType = new FileType
-                        {
-                            Extension = fi.Extension.ToLower().Trim(), 
-                            Length = fi.Length
-                        };
-                    var ft = fileTypes.FirstOrDefault( f => f.Extension.ToLower() == fileType.Extension.ToLower() );
-                        
-                    if (ft != null)
-                        ft.Length += fileType.Length;
-                    else
-                        fileTypes.Add(fileType);
-                }
-            }
-            return fileTypes;
-        }
+
     }
 }

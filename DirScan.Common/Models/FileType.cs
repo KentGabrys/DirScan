@@ -1,4 +1,4 @@
-﻿namespace DirScan.Service
+﻿namespace DirScan.Common.Models
 {
     public class FileType
     {

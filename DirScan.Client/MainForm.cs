@@ -3,8 +3,8 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Windows.Forms;
 using DirScan.Common;
+using DirScan.Common.Models;
 using DirScan.Logging;
-using DirScan.Service;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DirScan.Client

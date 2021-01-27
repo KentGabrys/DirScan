@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using DirScan.Client;
-using DirScan.Service;
+using DirScan.Common.Models;
 using NUnit.Framework;
 
 namespace DirScan.Tests

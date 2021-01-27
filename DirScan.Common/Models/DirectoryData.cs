@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace DirScan.Service
+namespace DirScan.Common.Models
 {
     public class DirectoryData
     {
@@ -12,7 +12,7 @@ namespace DirScan.Service
         public List<DirectoryInfo> Directories { get; set; }
         public IEnumerable<FileType> FileTypes { get; set; }
 
-        public bool CanBeProcessed => DirectoryCount > 0 && FileTypes != null;
+        public bool CanBeProcessed => ( DirectoryCount > 0 || FileCount > 0 ) && FileTypes != null;
 
     }
 }

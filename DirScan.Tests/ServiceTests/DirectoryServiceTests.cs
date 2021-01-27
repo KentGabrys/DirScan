@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using AutoMapper;
+using DirScan.Common;
+using DirScan.Common.Models;
 using DirScan.Service;
 using NUnit.Framework;
 
@@ -16,6 +19,8 @@ namespace DirScan.Tests
         [SetUp]
         public void SetUp()
         {
+            var mapper = new Mapper( new MapperConfiguration( a => a.AddProfile( new MappingProfile() ) ) );
+
             var logFile =
                 Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -23,14 +28,14 @@ namespace DirScan.Tests
 
             var logger = Logging.FileLogger.Create(logFile);
 
-            _svc = new DirectoryService();
-            _dirInfo = _svc.Scan("c:\\Temp\\DirScanTestArea", logger);
+            _svc = new DirectoryService(logger, mapper);
+            _dirInfo = _svc.Scan("c:\\Temp\\DirScanTestArea");
         }
 
         [Test]
         public void ServiceIsCreatedTest()
         {
-            Assert.IsTrue(_svc is IDirectoryService);
+            Assert.IsTrue(_svc is DirectoryServiceBase);
         }
 
         [Test]
