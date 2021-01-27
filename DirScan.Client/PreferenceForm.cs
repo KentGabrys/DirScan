@@ -1,18 +1,57 @@
-﻿using System.Data.SqlClient;
+﻿using System.ComponentModel;
+using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using DirScan.Client.Annotations;
 using DirScan.Logging;
 
 namespace DirScan.Client
 {
+    internal class PreferenceModel : INotifyPropertyChanged
+    {
+        private LoggingType _loggingType;
+
+        public LoggingType LoggingType
+        {
+            get => _loggingType;
+            set
+            {
+                _loggingType = value; 
+                OnPropertyChanged();
+            }
+        }
+
+
+        #region PropertyChanged Event & Handler
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
+        {
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+        }
+
+        #endregion
+    }
+
     public partial class PreferenceForm : Form
     {
         private LoggingType _loggingType;
         private string _connectionString;
+        private readonly PreferenceModel _preferenceModel;
 
         public PreferenceForm()
         {
             InitializeComponent();
+            _preferenceModel = new PreferenceModel();
+            BindControls();
+        }
 
+        private void BindControls()
+        {
+            rbSqlLogger.DataBindings.Add(
+                "Checked", _preferenceModel, "LoggingType", false, DataSourceUpdateMode.OnPropertyChanged );
         }
 
         public LoggingType LoggingType
@@ -21,8 +60,10 @@ namespace DirScan.Client
             set
             {
                 _loggingType = value;
+                _preferenceModel.LoggingType = value;
                 if (_loggingType == LoggingType.SqlLogger)
                 {
+                    
                     rbSqlLogger.Checked = true;
                     gbSqlLoggerConfig.Enabled = true;
                 }
@@ -117,21 +158,13 @@ namespace DirScan.Client
 					[DateLastModified] varchar(20) not null,
 					[Owner] varchar(255) not null,
                     [FileAttributes] varchar(512) not null,
-                    [User_Id] [int] not null,
-                    [Process_Date] [datetime] not null,
-                    [Row_Version] [timestamp] not null,
                     
                 constraint [PK__DirScanLog] primary key clustered 
                 ( [Id] asc )with (pad_index = off, statistics_norecompute = off, ignore_dup_key = off, allow_row_locks = on, allow_page_locks = on, fillfactor = 80) on [primary]
                 ) on [primary];
-                GO
-
-                alter table [dbo].[DirScanLog]  with check add  constraint [R__FK__DirScanLog__USER_BL__USER_ID] foreign key([User_Id])
-                references [dbo].[USER_BL] ([User_Id])
-                GO
-
-                alter table [dbo].[DirScanLog] check constraint [R__FK__DirScanLog__USER_BL__USER_ID]
                 GO" );
+
         }
     }
+
 }

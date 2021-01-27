@@ -37,7 +37,8 @@ namespace DirScan.Client.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=BL56A;Integrated Security=SSPI;database=EDWin_Dev;Connect Timeout=30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source= YourServer ;Integrated Security=SSPI;database= YourTable ;Connect Ti" +
+            "meout=30")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

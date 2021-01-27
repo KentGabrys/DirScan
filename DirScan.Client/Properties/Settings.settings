@@ -6,7 +6,7 @@
       <Value Profile="(Default)">FileLogger</Value>
     </Setting>
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source=BL56A;Integrated Security=SSPI;database=EDWin_Dev;Connect Timeout=30</Value>
+      <Value Profile="(Default)">Data Source= YourServer ;Integrated Security=SSPI;database= YourTable ;Connect Timeout=30</Value>
     </Setting>
   </Settings>
 </SettingsFile>
