@@ -140,6 +140,10 @@
       <Project>{ff12a90e-c9a2-4c40-af0b-4dcfdc3c4908}</Project>
       <Name>DirScan.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DirScan.ErrorLogging\DirScan.ErrorLogging.csproj">
+      <Project>{fa12b3f9-ee37-4028-b6e2-76e8be5fdf4b}</Project>
+      <Name>DirScan.ErrorLogging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DirScan.Logging\DirScan.Logging.csproj">
       <Project>{D1A285C4-0BFD-49DB-A7A6-FAC7B57AD716}</Project>
       <Name>DirScan.Logging</Name>
