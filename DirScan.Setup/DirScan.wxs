@@ -23,6 +23,7 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
 
+
     <Feature Id="ProductFeature" Title="DirScan" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentRef Id="ProgramMenuDir" />
@@ -66,7 +67,10 @@
                     WorkingDirectory='INSTALLDIR' Icon="App.ico" IconIndex="0" Advertise="yes" />
         </File>
       </Component>
-
+      <Component Id="AutoMapperDLL" Guid="4B1EBC3B-CFB9-40AA-A389-E7B6ED78C1AF">
+        <File Id="AutoMapperDLL" Source="$(var.Resources)AutoMapper.dll" KeyPath="yes">
+        </File>
+      </Component>
       <Component Id="DirScanCommonDLL" Guid="0EE5F3F1-82C1-41FF-8AD1-55FB629A5501">
         <File Id="DirScanCommonDLL" Source="$(var.Resources)DirScan.Common.dll" KeyPath="yes">
         </File>
@@ -85,6 +89,14 @@
       </Component>
       <Component Id="DirScanServiceDLL" Guid="EA16DB7E-3F7A-4FE3-8A8D-64EA31FB046B">
         <File Id="DirScanServiceDLL" Source="$(var.Resources)DirScan.Service.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <Component Id="EntityFrameworkDLL" Guid="EC938144-022C-4909-AAFB-99C42E2D18C6">
+        <File Id="EntityFrameworkDLL" Source="$(var.Resources)EntityFramework.dll" KeyPath="yes">
+        </File>
+      </Component>
+      <Component Id="EntityFrameworkSqlServerDLL" Guid="4FC63030-A4C0-4759-A03A-BDBAE672BD53">
+        <File Id="EntityFrameworkSqlServerDLL" Source="$(var.Resources)EntityFramework.SqlServer.dll" KeyPath="yes">
         </File>
       </Component>
       <Component Id="MicrosoftWindowsAPICodePackDLL" Guid="01B1DF67-E4BF-4974-A843-479C48AB2BA1">
