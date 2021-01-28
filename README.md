@@ -6,3 +6,16 @@ Scan directories for data about file data, (counts, names, size) and summary inf
 - Visual Studio 2019
 - WiX Toolset 3.11
 - SQL Server database (if you choose to log into db rather than a file)
+- - create table dbo.DirScanLog(
+                    Id int identity(1,1) not null,
+                    [File] varchar(max) not null,
+                    [Size] bigint not null,
+                    [DateCreated] varchar(20) not null,
+                    [DateLastModified] varchar(20) not null,
+                    [Owner] varchar(255) not null,
+                    [FileAttributes] varchar(512) not null,
+                    
+                constraint [PK__DirScanLog] primary key clustered 
+                ( [Id] asc )with (pad_index = off, statistics_norecompute = off, ignore_dup_key = off, allow_row_locks = on, allow_page_locks = on, fillfactor = 80) on [primary]
+                ) on [primary];
+                GO
