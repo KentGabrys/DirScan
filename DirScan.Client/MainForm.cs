@@ -11,14 +11,14 @@ namespace DirScan.Client
 {
     public partial class MainForm : Form
     {
-        public readonly DirScanModel _model;
+        public readonly MainModel _model;
 
 
         public MainForm()
         {
             InitializeComponent();
 
-            _model = new DirScanModel();
+            _model = new MainModel();
             BindControlsToModel();
             InitializeModel();
         }
@@ -39,26 +39,21 @@ namespace DirScan.Client
         {
             // labels
             lblSelectedFolder.DataBindings.Add(
-                "Text", _model, "SelectedFolder", false, DataSourceUpdateMode.OnPropertyChanged);
-
+                "Text", _model, "SelectedFolder", false, DataSourceUpdateMode.OnPropertyChanged );
             lblFileTypes.DataBindings.Add(
                 "Text", _model, "FileTypesMessage", false, DataSourceUpdateMode.OnPropertyChanged );
-            
             // status bar
             statusMessage.DataBindings.Add(
-                "Text", _model, "Message", false, DataSourceUpdateMode.OnPropertyChanged);
+                "Text", _model, "Message", false, DataSourceUpdateMode.OnPropertyChanged );
             statusLogType.DataBindings.Add(
                 "Text", _model, "LoggingType", false, DataSourceUpdateMode.OnPropertyChanged );
             statusVersion.DataBindings.Add(
-                "Text", _model, "Version", false, DataSourceUpdateMode.OnPropertyChanged);
-
+                "Text", _model, "Version", false, DataSourceUpdateMode.OnPropertyChanged );
             //buttons
             btnOpenLogFile.DataBindings.Add(
-                "Enabled", _model, "CanOpenLogFile", false, DataSourceUpdateMode.OnPropertyChanged);
-
+                "Enabled", _model, "CanOpenLogFile", false, DataSourceUpdateMode.OnPropertyChanged );
             btnScanStats.DataBindings.Add(
                 "Enabled", _model, "CanScanStatistics", false, DataSourceUpdateMode.OnPropertyChanged );
-
         }
 
         private void btnSelectFolder_Click(object sender, System.EventArgs e)
@@ -66,28 +61,11 @@ namespace DirScan.Client
             using (var dlg = new CommonOpenFileDialog())
             {
                 dlg.IsFolderPicker = true;
-
                 if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
                 {
                     _model.SelectedFolder = dlg.FileName;
                     PrepareScan();
                 }
-            }
-        }
-
-        private void PrepareScan()
-        {
-            _model.PrepareScan();
-            lvStats.Items.Clear();
-            lvFileTypes.Items.Clear();
-            switch ( _model.LoggingType )
-            {
-                case LoggingType.FileLogger:
-                    _model.CreateSessionLogging();
-                    break;
-                case LoggingType.SqlLogger:
-                    _model.CreateSessionSqlLogging();
-                    break;
             }
         }
 
@@ -99,45 +77,6 @@ namespace DirScan.Client
             bgScan.DoWork += BgScanOnDoWork;
             bgScan.RunWorkerCompleted += BgScanOnRunWorkerCompleted;
             bgScan.RunWorkerAsync();
-        }
-
-        private void InitializeScan()
-        {
-            progress.Visible = true;
-            progress.Style = ProgressBarStyle.Marquee;
-            progress.MarqueeAnimationSpeed = 50;
-
-            status_Resize(this, EventArgs.Empty);
-
-            _model.Message = "Scan started, please wait...";
-        }
-
-        private void BgScanOnDoWork(object sender, DoWorkEventArgs e)
-        {
-            if (_model.FolderSelected)
-                e.Result  = _model.ScanStatistics();
-        }
-
-        private void BgScanOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            progress.Style = ProgressBarStyle.Blocks;
-            progress.MarqueeAnimationSpeed = 0;
-            progress.Visible = false;
-            status_Resize(sender, EventArgs.Empty);
-
-            _model.LoadStatsListView(lvStats, lvFileTypes, e.Result as DirectoryDataSummary);
-            _model.ScanComplete();
-        }
-
-
-        private void status_Resize(object sender, EventArgs e)
-        {
-            var formWidth = this.Width;
-            var statusControlsWidthMax = formWidth - 40;
-            if (progress.Visible)
-                statusMessage.Width = statusControlsWidthMax - progress.Width - statusLogType.Width - statusVersion.Width;
-            else
-                statusMessage.Width = statusControlsWidthMax - statusLogType.Width - statusVersion.Width;
         }
 
         private void btnOpenLogFile_Click(object sender, EventArgs e)
@@ -164,7 +103,69 @@ namespace DirScan.Client
 
                     Properties.Settings.Default.Save();
                 }
+                SetModelLogger();
             }
         }
+
+        public virtual void status_Resize(object sender, EventArgs e)
+        {
+            var formWidth = this.Width;
+            var statusControlsWidthMax = formWidth - 40;
+            if (progress.Visible)
+                statusMessage.Width = statusControlsWidthMax - progress.Width - statusLogType.Width - statusVersion.Width;
+            else
+                statusMessage.Width = statusControlsWidthMax - statusLogType.Width - statusVersion.Width;
+        }
+
+        public void PrepareScan()
+        {
+            _model.PrepareScan();
+            lvStats.Items.Clear();
+            lvFileTypes.Items.Clear();
+            SetModelLogger();
+        }
+
+        public void InitializeScan()
+        {
+            progress.Visible = true;
+            progress.Style = ProgressBarStyle.Marquee;
+            progress.MarqueeAnimationSpeed = 50;
+
+            status_Resize(this, EventArgs.Empty);
+
+            _model.Message = "Scan started, please wait...";
+        }
+
+        public virtual void SetModelLogger()
+        {
+            switch (_model.LoggingType)
+            {
+                case LoggingType.FileLogger:
+                    _model.CreateSessionLogging();
+                    break;
+                case LoggingType.SqlLogger:
+                    _model.CreateSessionSqlLogging();
+                    break;
+            }
+        }
+
+        #region BackGroundWorker EventHandlers
+        private void BgScanOnDoWork(object sender, DoWorkEventArgs e)
+        {
+            if (_model.FolderSelected)
+                e.Result  = _model.ScanStatistics();
+        }
+
+        private void BgScanOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            progress.Style = ProgressBarStyle.Blocks;
+            progress.MarqueeAnimationSpeed = 0;
+            progress.Visible = false;
+            status_Resize(sender, EventArgs.Empty);
+
+            _model.LoadStatsListView(lvStats, lvFileTypes, e.Result as DirectoryDataSummary);
+            _model.ScanComplete();
+        }
+        #endregion
     }
 }

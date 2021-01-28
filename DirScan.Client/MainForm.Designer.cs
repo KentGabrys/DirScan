@@ -293,7 +293,7 @@ namespace DirScan.Client
         #endregion
 
         private System.Windows.Forms.Button btnSelectFolder;
-        private System.Windows.Forms.Label lblSelectedFolder;
+        public System.Windows.Forms.Label lblSelectedFolder;
         private System.Windows.Forms.Button btnScanStats;
         private System.Windows.Forms.ColumnHeader colDescription;
         private System.Windows.Forms.ColumnHeader colScanValue;
@@ -305,7 +305,7 @@ namespace DirScan.Client
         private System.Windows.Forms.Label lblFileTypes;
         public System.Windows.Forms.Button btnOpenLogFile;
         private BindableToolStripStatusLabel statusMessage;
-        private System.Windows.Forms.ToolStripProgressBar progress;
+        public System.Windows.Forms.ToolStripProgressBar progress;
         private BindableToolStripStatusLabel statusVersion;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem miFile;

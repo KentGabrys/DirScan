@@ -16,7 +16,7 @@ using DirScan.Service;
 
 namespace DirScan.Client
 {
-    public class DirScanModel : INotifyPropertyChanged
+    public class MainModel : INotifyPropertyChanged
     {
         private string _selectedFolder;
         private string _message = string.Empty;
@@ -25,12 +25,12 @@ namespace DirScan.Client
         private int _fileTypeCount;
         private bool _canScanStatistics;
         private string _logFileName;
-        private ILogger _logger;
+        public ILogger _logger;
         private LoggingType _loggingType;
         
         private readonly Mapper _mapper;
 
-        public DirScanModel()
+        public MainModel()
         {
             _mapper = new Mapper( new MapperConfiguration( a => a.AddProfile( new MappingProfile() ) ) );
         }
@@ -145,6 +145,7 @@ namespace DirScan.Client
 
         public void CreateSessionSqlLogging()
         {
+            if( string.IsNullOrEmpty( ConnectionString )) throw new ConnectionStringNotFoundException();
             _logger = new SqlLogger(
                 new DirScanRepository( ConnectionString ), _mapper );
         }

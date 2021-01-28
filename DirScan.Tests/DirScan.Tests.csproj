@@ -52,8 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientTests\ClientDirScanModelTests.cs" />
-    <Compile Include="ClientTests\ClientFormTests.cs" />
+    <Compile Include="ClientTests\MainModelTests.cs" />
+    <Compile Include="ClientTests\MainFormTests.cs" />
+    <Compile Include="ClientTests\MockMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientTests\PreferenceFormTests.cs" />
     <Compile Include="LoggerTests\FileLoggerTests.cs" />
     <Compile Include="ServiceTests\DirectoryManagerTests.cs" />
     <Compile Include="ServiceTests\DirectoryServiceTests.cs" />

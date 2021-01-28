@@ -182,11 +182,11 @@ namespace DirScan.Client
         #endregion
 
         private System.Windows.Forms.GroupBox gbLogger;
-        private System.Windows.Forms.RadioButton rbSqlLogger;
-        private System.Windows.Forms.RadioButton rbFileLogger;
-        private System.Windows.Forms.TextBox txtConnectionString;
+        public System.Windows.Forms.RadioButton rbSqlLogger;
+        public System.Windows.Forms.RadioButton rbFileLogger;
+        public System.Windows.Forms.TextBox txtConnectionString;
         private System.Windows.Forms.Label lblConnectionString;
-        private System.Windows.Forms.GroupBox gbSqlLoggerConfig;
+        public System.Windows.Forms.GroupBox gbSqlLoggerConfig;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnTableSqlClipboard;
