@@ -6,6 +6,7 @@ Scan directories for data about file data, (counts, names, size) and summary inf
 - Visual Studio 2019
 - WiX Toolset 3.11
 - SQL Server database (if you choose to log into db rather than a file)
+###### This table is required in the database of your choice should you care to log things to SQL Server
 ---
     create table dbo.DirScanLog(
         Id int identity(1,1) not null,
