@@ -6,7 +6,7 @@ Scan directories for data about file data, (counts, names, size) and summary inf
 - Visual Studio 2019 [.NET 4.8 (standard framework)]
 - [WiX Toolset 3.11](https://wixtoolset.org/releases/)
 - SQL Server database (if you choose to log into db rather than a file)
-###### This table (DirScanLog) is required in the database of your choice should you care to log things to SQL Server. The below script will create the table and primary key for the Id field.
+###### This table (DirScanLog) is required in the database of your choice should you care to log things to SQL Server. The below script will create the table and primary key for the Id field. This script is also available in app on the preference dialog. (<i>"Put SQL required to Create Loggin Table on Clipboard"</i> - button)
 ---
     create table dbo.DirScanLog(
         Id int identity(1,1) not null,
