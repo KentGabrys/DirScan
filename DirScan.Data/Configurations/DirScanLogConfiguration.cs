@@ -11,8 +11,8 @@ namespace DirScan.Data
             this.Property( p => p.Size ).HasColumnName( "Size" );
             this.Property( p => p.DateCreated ).HasColumnName( "DateCreated" );
             this.Property( p => p.Attributes ).HasColumnName( "FileAttributes" );
-            this.Property( p => p.UserId ).HasColumnName( "User_Id" );
-            this.Property( p => p.ProcessDate ).HasColumnName( "Process_Date" );
+            // this.Property( p => p.UserId ).HasColumnName( "User_Id" );
+            // this.Property( p => p.ProcessDate ).HasColumnName( "Process_Date" );
         }
 
    

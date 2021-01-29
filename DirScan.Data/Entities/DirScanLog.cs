@@ -11,7 +11,7 @@ namespace DirScan.Data
         public string DateLastModified { get; set; }
         public string Owner { get; set; }
         public string Attributes { get; set; }
-        public int UserId { get; set; } = 2;
-        public DateTime ProcessDate { get; set; } = DateTime.Now;
+        // public int UserId { get; set; } = 2;
+        // public DateTime ProcessDate { get; set; } = DateTime.Now;
     }
 }
