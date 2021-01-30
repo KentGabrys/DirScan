@@ -6,6 +6,9 @@
 # User-defined files
 *.cs_alt
 
+# Build/Setup Directory
+[Ss]etup/
+
 # User-specific files
 *.rsuser
 *.suo
