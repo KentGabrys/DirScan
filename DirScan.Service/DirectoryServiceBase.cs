@@ -18,7 +18,7 @@ namespace DirScan.Service
             _mapper = mapper;
         }
 
-        public abstract DirectoryData Scan(string path);
+        public abstract DirectoryData Scan(string path, bool logDirectories = false);
 
         protected IEnumerable<FileType> GetFileTypes( List<FileInfo> files )
         {

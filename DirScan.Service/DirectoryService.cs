@@ -11,21 +11,22 @@ namespace DirScan.Service
 {
     public class DirectoryService : DirectoryServiceBase
     {
-        public DirectoryService( ILogger logger, IMapper mapper) 
-            : base( logger, mapper )
+        public DirectoryService(ILogger logger, IMapper mapper)
+            : base(logger, mapper)
         {
         }
 
-        public override DirectoryData Scan(string path)
+        public override DirectoryData Scan(string path, bool logDirectories = false)
         {
             try
             {
-                var dir = new DirectoryInfo( path );
-                var dirs = dir.EnumerateDirectories( "*.*" ).ToList();
-                var files = dir.EnumerateFiles( "*.*" ).ToList();
-                var fileTypes = GetFileTypes( files );
+                var dir = new DirectoryInfo(path);
+                var dirs = dir.EnumerateDirectories("*.*").ToList();
+                var files = dir.EnumerateFiles("*.*").ToList();
+                var fileTypes = GetFileTypes(files);
 
-                LogDirectoryFiles( dirs, files );
+                var logDirs = logDirectories ? dirs : null;
+                LogDirectoryFiles(logDirs, files);
                 _logger.SaveLogs();
 
                 var dirData = new DirectoryData()
@@ -34,32 +35,26 @@ namespace DirScan.Service
                     Files = files,
                     DirectoryCount = dirs.Count(),
                     FileCount = files.Count(),
-                    DirectoryFileSize = files.Sum( fi => fi.Length ),
+                    DirectoryFileSize = files.Sum(fi => fi.Length),
                     FileTypes = fileTypes,
                 };
                 return dirData;
             }
-            catch ( Exception exception )
+            catch (Exception exception)
             {
-                ErrorLog.Log( exception, $"An exception occurred attempting to scan {path}." );
+                ErrorLog.Log(exception, $"An exception occurred attempting to scan {path}.");
                 return new DirectoryData();
             }
         }
 
         private void LogDirectoryFiles(List<DirectoryInfo> dirs, List<FileInfo> files)
         {
-            // foreach (var di in dirs)
-            // {
-            //     var df = _mapper.Map<DirectoryFile>( di );
-            //     _logger.Log(df);
-            // }
+            if (dirs != null)
+                foreach (var di in dirs)
+                    _logger.Log(_mapper.Map<DirectoryFile>(di));
 
             foreach (var f in files)
-            {
-                var df = _mapper.Map<DirectoryFile>( f );
-                _logger.Log(df);
-            }
-
+                _logger.Log(_mapper.Map<DirectoryFile>(f));
         }
 
 

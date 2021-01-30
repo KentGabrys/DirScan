@@ -39,20 +39,20 @@ namespace DirScan.Client
             this.status = new System.Windows.Forms.StatusStrip();
             this.statusMessage = new DirScan.Client.BindableToolStripStatusLabel();
             this.progress = new System.Windows.Forms.ToolStripProgressBar();
+            this.statusLogType = new DirScan.Client.BindableToolStripStatusLabel();
             this.statusVersion = new DirScan.Client.BindableToolStripStatusLabel();
             this.lvFileTypes = new System.Windows.Forms.ListView();
             this.colType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblFileTypes = new System.Windows.Forms.Label();
             this.btnOpenLogFile = new System.Windows.Forms.Button();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuMain = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miFilePrefs = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.miFileSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.miFileExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusLogType = new DirScan.Client.BindableToolStripStatusLabel();
             this.status.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSelectFolder
@@ -151,6 +151,13 @@ namespace DirScan.Client
             this.progress.Name = "progress";
             this.progress.Size = new System.Drawing.Size(150, 22);
             // 
+            // statusLogType
+            // 
+            this.statusLogType.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLogType.Name = "statusLogType";
+            this.statusLogType.Size = new System.Drawing.Size(69, 23);
+            this.statusLogType.Text = "Log Type";
+            // 
             // statusVersion
             // 
             this.statusVersion.AutoSize = false;
@@ -216,21 +223,21 @@ namespace DirScan.Client
             this.btnOpenLogFile.UseVisualStyleBackColor = true;
             this.btnOpenLogFile.Click += new System.EventHandler(this.btnOpenLogFile_Click);
             // 
-            // menuStrip1
+            // menuMain
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miFile});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(595, 24);
-            this.menuStrip1.TabIndex = 8;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuMain.Location = new System.Drawing.Point(0, 0);
+            this.menuMain.Name = "menuMain";
+            this.menuMain.Size = new System.Drawing.Size(595, 24);
+            this.menuMain.TabIndex = 8;
+            this.menuMain.Text = "menuStrip1";
             // 
             // miFile
             // 
             this.miFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miFilePrefs,
-            this.toolStripMenuItem1,
+            this.miFileSeparator1,
             this.miFileExit});
             this.miFile.Name = "miFile";
             this.miFile.Size = new System.Drawing.Size(37, 20);
@@ -239,27 +246,21 @@ namespace DirScan.Client
             // miFilePrefs
             // 
             this.miFilePrefs.Name = "miFilePrefs";
-            this.miFilePrefs.Size = new System.Drawing.Size(135, 22);
+            this.miFilePrefs.Size = new System.Drawing.Size(180, 22);
             this.miFilePrefs.Text = "&Preferences";
             this.miFilePrefs.Click += new System.EventHandler(this.miFilePreferences_Click);
             // 
-            // toolStripMenuItem1
+            // miFileSeparator1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(132, 6);
+            this.miFileSeparator1.Name = "miFileSeparator1";
+            this.miFileSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // miFileExit
             // 
             this.miFileExit.Name = "miFileExit";
-            this.miFileExit.Size = new System.Drawing.Size(135, 22);
+            this.miFileExit.Size = new System.Drawing.Size(180, 22);
             this.miFileExit.Text = "E&xit";
-            // 
-            // statusLogType
-            // 
-            this.statusLogType.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLogType.Name = "statusLogType";
-            this.statusLogType.Size = new System.Drawing.Size(69, 23);
-            this.statusLogType.Text = "Log Type";
+            this.miFileExit.Click += new System.EventHandler(this.miFileExit_Click);
             // 
             // MainForm
             // 
@@ -270,21 +271,21 @@ namespace DirScan.Client
             this.Controls.Add(this.lblFileTypes);
             this.Controls.Add(this.lvFileTypes);
             this.Controls.Add(this.status);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.menuMain);
             this.Controls.Add(this.lvStats);
             this.Controls.Add(this.btnScanStats);
             this.Controls.Add(this.lblSelectedFolder);
             this.Controls.Add(this.btnSelectFolder);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuMain;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DirScan";
             this.status.ResumeLayout(false);
             this.status.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuMain.ResumeLayout(false);
+            this.menuMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,10 +308,10 @@ namespace DirScan.Client
         private BindableToolStripStatusLabel statusMessage;
         public System.Windows.Forms.ToolStripProgressBar progress;
         private BindableToolStripStatusLabel statusVersion;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuMain;
         private System.Windows.Forms.ToolStripMenuItem miFile;
         private System.Windows.Forms.ToolStripMenuItem miFilePrefs;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator miFileSeparator1;
         private System.Windows.Forms.ToolStripMenuItem miFileExit;
         private BindableToolStripStatusLabel statusLogType;
     }

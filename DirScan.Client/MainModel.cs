@@ -29,7 +29,7 @@ namespace DirScan.Client
         private LoggingType _loggingType;
         
         private readonly Mapper _mapper;
-
+  
         public MainModel()
         {
             _mapper = new Mapper( new MapperConfiguration( a => a.AddProfile( new MappingProfile() ) ) );
@@ -145,7 +145,8 @@ namespace DirScan.Client
 
         public void CreateSessionSqlLogging()
         {
-            if( string.IsNullOrEmpty( ConnectionString )) throw new ConnectionStringNotFoundException();
+            if( string.IsNullOrEmpty( ConnectionString )) 
+                throw new ConnectionStringNotFoundException();
             _logger = new SqlLogger(
                 new DirScanRepository( ConnectionString ), _mapper );
         }
@@ -159,8 +160,18 @@ namespace DirScan.Client
         public DirectoryDataSummary ScanStatistics()
         {
             var dm = new DirectoryManager( _logger, _mapper );
-            dm.Scan( SelectedFolder );
+            dm.Scan( SelectedFolder, LogDirectories );
             return dm.DirectoryDataSummary;
+        }
+
+        public bool LogDirectories
+        {
+            get => Settings.Default.LogDirectories;
+            set
+            {
+                Settings.Default.LogDirectories = value; 
+                Settings.Default.Save();
+            }
         }
 
         public void LoadStatsListView( ListView lvStats, ListView lvFileTypes, DirectoryDataSummary data )

@@ -21,6 +21,8 @@ namespace DirScan.Client
             }catch  (Exception exception)
             {
                 ErrorLog.Log(exception);
+                MessageBox.Show( @"An unhandled error has occurred. Please check the error log file for the issue encountered.",
+                    @"Unhandled Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

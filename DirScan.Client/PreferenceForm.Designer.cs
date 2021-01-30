@@ -39,6 +39,7 @@ namespace DirScan.Client
             this.btnTestConnection = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.chkLogDirectories = new System.Windows.Forms.CheckBox();
             this.gbLogger.SuspendLayout();
             this.gbSqlLoggerConfig.SuspendLayout();
             this.SuspendLayout();
@@ -158,11 +159,24 @@ namespace DirScan.Client
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // chkLogDirectories
+            // 
+            this.chkLogDirectories.AutoSize = true;
+            this.chkLogDirectories.Location = new System.Drawing.Point(287, 69);
+            this.chkLogDirectories.Name = "chkLogDirectories";
+            this.chkLogDirectories.Size = new System.Drawing.Size(159, 17);
+            this.chkLogDirectories.TabIndex = 6;
+            this.chkLogDirectories.Text = "Log Directories During Scan";
+            this.chkLogDirectories.UseVisualStyleBackColor = true;
+            // 
             // PreferenceForm
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(464, 221);
+            this.Controls.Add(this.chkLogDirectories);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.gbSqlLoggerConfig);
@@ -176,6 +190,7 @@ namespace DirScan.Client
             this.gbSqlLoggerConfig.ResumeLayout(false);
             this.gbSqlLoggerConfig.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -191,5 +206,6 @@ namespace DirScan.Client
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnTableSqlClipboard;
         private System.Windows.Forms.Button btnTestConnection;
+        private System.Windows.Forms.CheckBox chkLogDirectories;
     }
 }

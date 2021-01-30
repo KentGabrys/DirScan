@@ -9,23 +9,23 @@ namespace DirScan.ErrorLogging
 
         public static void Log( Exception exception )
         {
-            var logFile = GetDefaultLogFileName();
+            var logFile = DefaultFileName();
             Log( logFile, exception );
         }
         public static void Log( Exception exception, string additionText )
         {
-            var logFile = GetDefaultLogFileName();
+            var logFile = DefaultFileName();
             Log( logFile, exception, additionText );
         }
 
-        private static void Log( string fileName, Exception exception )
+        public static void Log( string fileName, Exception exception )
         {
             using (var fs = File.AppendText( fileName ))
                 fs.Write( GetExceptionString( exception ) );
 
         }
 
-        private static void Log( string fileName, Exception exception, string additionalText )
+        public static void Log( string fileName, Exception exception, string additionalText )
         {
             using (var fs = File.AppendText( fileName ))
             {
@@ -38,14 +38,15 @@ namespace DirScan.ErrorLogging
 
         }
 
-        private static string GetDefaultLogFileName()
+        public static string DefaultFileName(
+            string baseFileName = "DirScanErrorLog", 
+            string subDirectory = "")
         {
             // for now, put error logs in MyDocuments
             return
                 Path.Combine(
-                    Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments ),
-                    $@"DirScanErrorLog_{DateTime.Now.Year,2:00}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}.log" );
-
+                    Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments ), subDirectory,
+                    $@"{baseFileName}_{DateTime.Now.Year,2:00}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}.log" );
         }
 
         private static string GetExceptionString( Exception exception )
@@ -88,7 +89,6 @@ namespace DirScan.ErrorLogging
                 str.Append( Environment.NewLine );
                 str.Append( exception.StackTrace );
                 str.Append( Environment.NewLine );
-
             }
             catch
             {
@@ -96,9 +96,6 @@ namespace DirScan.ErrorLogging
                 str.Append( "An exception occurred trying to log the text: " + exception.Message );
             }
             return str.ToString();
-
         }
     }
-
-
 }

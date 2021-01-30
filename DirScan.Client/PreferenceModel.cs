@@ -11,6 +11,7 @@ namespace DirScan.Client
     {
         private LoggingType _loggingType;
         private string _connectionString;
+        private bool _logDirectories;
 
         public LoggingType LoggingType
         {
@@ -18,10 +19,21 @@ namespace DirScan.Client
             set
             {
                 _loggingType = value;
-                OnPropertyChanged( nameof( IsFileLoggingType ) );
-                OnPropertyChanged( nameof( IsSqlLoggingType ) );
+                OnPropertyChanged(nameof(IsFileLoggingType));
+                OnPropertyChanged(nameof(IsSqlLoggingType));
             }
         }
+
+        public bool LogDirectories
+        {
+            get => _logDirectories;
+            set
+            {
+                _logDirectories = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public bool IsSqlLoggingType => LoggingType == LoggingType.SqlLogger;
 
@@ -43,9 +55,9 @@ namespace DirScan.Client
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged( [CallerMemberName] string propertyName = null )
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
@@ -61,24 +73,24 @@ namespace DirScan.Client
                 var formatString = "{0} to \"" + ConnectionString + "\"";
 
                 if (TestConnection())
-                    message = string.Format( formatString, "Successfully connected " );
+                    message = string.Format(formatString, "Successfully connected ");
                 else
-                    message = string.Format( formatString, "Failed connection " );
+                    message = string.Format(formatString, "Failed connection ");
             }
             finally
             {
                 Cursor.Current = cur;
             }
 
-            MessageBox.Show( message, @"Test Connection",
-                MessageBoxButtons.OK, MessageBoxIcon.Exclamation );
+            MessageBox.Show(message, @"Test Connection",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private bool TestConnection()
         {
             try
             {
-                using (var sqlConnection = new SqlConnection( ConnectionString ))
+                using (var sqlConnection = new SqlConnection(ConnectionString))
                 {
                     sqlConnection.Open();
                     sqlConnection.Close();
@@ -106,7 +118,7 @@ namespace DirScan.Client
                 constraint [PK__DirScanLog] primary key clustered 
                 ( [Id] asc )with (pad_index = off, statistics_norecompute = off, ignore_dup_key = off, allow_row_locks = on, allow_page_locks = on, fillfactor = 80) on [primary]
                 ) on [primary];
-                GO" );
+                GO");
 
         }
 

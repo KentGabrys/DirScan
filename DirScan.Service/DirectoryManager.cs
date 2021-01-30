@@ -18,23 +18,23 @@ namespace DirScan.Service
             _mapper = mapper ?? throw new ArgumentNullException( nameof( _mapper ) );
         }
 
-        public void Scan(string path)
+        public void Scan(string path, bool logDirectories = false)
         {
             if (path == null) throw new ArgumentNullException(nameof(path));
 
-            ScanPath( path );
+            ScanPath( path, logDirectories );
         }
 
-        private void ScanPath(string path )
+        private void ScanPath(string path, bool logDirectories = false)
         {
             var dirSvc = new DirectoryService( _logger, _mapper );
-            var dd = dirSvc.Scan(path);
+            var dd = dirSvc.Scan(path,  logDirectories);
 
             if ( dd.CanBeProcessed )
             {
                 if ( dd.DirectoryCount > 0 )
                     foreach ( var dir in dd.Directories )
-                        ScanPath( dir.FullName );
+                        ScanPath( dir.FullName, logDirectories );
 
                 DirectoryDataSummary.DirectoryCount += dd.DirectoryCount;
                 DirectoryDataSummary.FileCount += dd.FileCount;

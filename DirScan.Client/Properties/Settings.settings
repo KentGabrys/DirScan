@@ -8,5 +8,8 @@
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
       <Value Profile="(Default)">Data Source= YourServer ;Integrated Security=SSPI;database= YourTable ;Connect Timeout=30</Value>
     </Setting>
+    <Setting Name="LogDirectories" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

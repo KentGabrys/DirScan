@@ -33,15 +33,15 @@ namespace DirScan.Tests
         public void PreferenceFormInitializesModelFileLoggerTest()
         {
             _form.LoggingType = LoggingType.FileLogger;
-            Assert.IsTrue( _form._preferenceModel.IsFileLoggingType );
-            Assert.IsFalse( _form._preferenceModel.IsSqlLoggingType );
+            Assert.IsTrue( _form._model.IsFileLoggingType );
+            Assert.IsFalse( _form._model.IsSqlLoggingType );
         }
         [Test]
         public void PreferenceFormInitializesModelSqlLoggerTest()
         {
             _form.LoggingType = LoggingType.SqlLogger;
-            Assert.IsFalse( _form._preferenceModel.IsFileLoggingType );
-            Assert.IsTrue( _form._preferenceModel.IsSqlLoggingType );
+            Assert.IsFalse( _form._model.IsFileLoggingType );
+            Assert.IsTrue( _form._model.IsSqlLoggingType );
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace DirScan.Tests
         public void FormConnectionStringUpdatesModelTest()
         {
             _form.ConnectionString = "Test String";
-            Assert.AreEqual( "Test String", _form._preferenceModel.ConnectionString );
+            Assert.AreEqual( "Test String", _form._model.ConnectionString );
         }
 
         [Test]
