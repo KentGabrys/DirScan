@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AutoMapper;
-using DirScan.Common.Models;
+using DirScan.Data;
 using DirScan.ErrorLogging;
 using DirScan.Logging;
 

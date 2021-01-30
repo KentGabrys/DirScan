@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-using DirScan.Client.Annotations;
+using DirScan.Client.Properties;
 using DirScan.Logging;
 
 namespace DirScan.Client

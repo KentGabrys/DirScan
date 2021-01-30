@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Windows.Forms;
 using DirScan.Common;
-using DirScan.Common.Models;
+using DirScan.Data;
 using DirScan.ErrorLogging;
 using DirScan.Logging;
 using Microsoft.WindowsAPICodePack.Dialogs;

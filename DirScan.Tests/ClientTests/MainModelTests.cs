@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using DirScan.Client;
-using DirScan.Common.Models;
+using DirScan.Data;
 using DirScan.Logging;
 using NUnit.Framework;
 

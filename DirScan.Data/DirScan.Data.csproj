@@ -62,13 +62,23 @@
     <Compile Include="DTOs\IDirScanLogDto.cs" />
     <Compile Include="DTOs\DirScanLogDto.cs" />
     <Compile Include="Entities\DirScanLog.cs" />
+    <Compile Include="Configurations\MappingProfile.cs" />
+    <Compile Include="Models\DirectoryData.cs" />
+    <Compile Include="Models\DirectoryDataSummary.cs" />
+    <Compile Include="Models\DirectoryFile.cs" />
+    <Compile Include="Models\FileType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DirScan.Common\DirScan.Common.csproj">
+      <Project>{CAFEB191-532C-4869-86DE-26D3989195A4}</Project>
+      <Name>DirScan.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DirScan.Data
+﻿namespace DirScan.Data
 {
     public class DirScanLog
     {

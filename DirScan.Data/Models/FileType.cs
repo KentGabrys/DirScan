@@ -1,4 +1,4 @@
-﻿namespace DirScan.Common.Models
+﻿namespace DirScan.Data
 {
     public class FileType
     {

@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using AutoMapper;
 using DirScan.Client.Properties;
 using DirScan.Common;
-using DirScan.Common.Models;
 using DirScan.Data;
 using DirScan.Logging;
 using DirScan.Service;

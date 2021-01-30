@@ -1,10 +1,8 @@
 ﻿using System.IO;
 using System.Security.Principal;
 using AutoMapper;
-using DirScan.Common.Models;
-using DirScan.Data;
 
-namespace DirScan.Common
+namespace DirScan.Data
 {
     public class MappingProfile : Profile
     {

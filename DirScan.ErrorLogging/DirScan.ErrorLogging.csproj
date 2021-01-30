@@ -45,5 +45,11 @@
     <Compile Include="ErrorLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DirScan.Common\DirScan.Common.csproj">
+      <Project>{CAFEB191-532C-4869-86DE-26D3989195A4}</Project>
+      <Name>DirScan.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

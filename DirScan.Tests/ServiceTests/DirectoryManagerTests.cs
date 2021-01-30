@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
 using AutoMapper;
-using DirScan.Common;
-using DirScan.Common.Models;
+using DirScan.Data;
 using DirScan.Logging;
 using DirScan.Service;
 using NUnit.Framework;
@@ -62,7 +61,7 @@ namespace DirScan.Tests
         {
             Assert.AreEqual(7, _dds.FileCount);
             Assert.AreEqual(1, _dds.DirectoryCount);
-            Assert.AreEqual( 8455466, _dds.Size);
+            Assert.AreEqual(8455454, _dds.Size);
         }
     }
 

@@ -1,8 +1,7 @@
-﻿using DirScan.Data;
-using System;
+﻿using System;
 using System.IO;
 
-namespace DirScan.Common.Models
+namespace DirScan.Data
 {
     public class DirectoryFile : IDirScanLogDto
     {
