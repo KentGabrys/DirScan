@@ -32,7 +32,6 @@ namespace DirScan.Service
                 var dirData = new DirectoryData()
                 {
                     Directories = dirs,
-                    Files = files,
                     DirectoryCount = dirs.Count(),
                     FileCount = files.Count(),
                     DirectoryFileSize = files.Sum(fi => fi.Length),
