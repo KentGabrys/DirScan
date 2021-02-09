@@ -31,7 +31,7 @@ namespace DirScan.Client
             _model.LoggingType = Properties.Settings.Default.LoggerPreference;
             _model.ConnectionString = Properties.Settings.Default.ConnectionString;
             progress.Visible = false;
-            status_Resize(this, EventArgs.Empty);
+            status_Resize( this, EventArgs.Empty );
         }
 
 
@@ -56,7 +56,7 @@ namespace DirScan.Client
                 "Enabled", _model, "CanScanStatistics", false, DataSourceUpdateMode.OnPropertyChanged );
         }
 
-        private void btnSelectFolder_Click(object sender, System.EventArgs e)
+        private void btnSelectFolder_Click( object sender, System.EventArgs e )
         {
             using (var dlg = new CommonOpenFileDialog())
             {
@@ -79,7 +79,7 @@ namespace DirScan.Client
         }
         #endregion
 
-        private void btnScanStats_Click(object sender, System.EventArgs e)
+        private void btnScanStats_Click( object sender, System.EventArgs e )
         {
             InitializeScan();
 
@@ -97,18 +97,18 @@ namespace DirScan.Client
             progress.Style = ProgressBarStyle.Marquee;
             progress.MarqueeAnimationSpeed = 50;
 
-            status_Resize(this, EventArgs.Empty);
+            status_Resize( this, EventArgs.Empty );
 
             _model.Message = "Scan started, please wait...";
         }
         #endregion      
 
-        private void btnOpenLogFile_Click(object sender, EventArgs e)
+        private void btnOpenLogFile_Click( object sender, EventArgs e )
         {
             _model.OpenLogFile();
         }
 
-        public virtual void status_Resize(object sender, EventArgs e)
+        public virtual void status_Resize( object sender, EventArgs e )
         {
             var formWidth = this.Width;
             var statusControlsWidthMax = formWidth - 40;
@@ -120,37 +120,37 @@ namespace DirScan.Client
 
         private void miFilePreferences_Click( object sender, EventArgs e )
         {
-            using ( var preferenceForm = new PreferenceForm() )
+            using (var preferenceForm = new PreferenceForm())
             {
-                SetSavedPreferencesToPreferenceForm(preferenceForm);
+                SetSavedPreferencesToPreferenceForm( preferenceForm );
 
-                if ( preferenceForm.ShowDialog(this) == DialogResult.OK )
+                if (preferenceForm.ShowDialog( this ) == DialogResult.OK)
                 {
-                    UpdateModelFromPreferenceForm(preferenceForm);
-                    SaveUserPreferences(preferenceForm);
+                    UpdateModelFromPreferenceForm( preferenceForm );
+                    SaveUserPreferences( preferenceForm );
+                    SetModelLogger();
                 }
-                SetModelLogger();
             }
         }
         #region  Save User Preferences to user settings
-        private static void SetSavedPreferencesToPreferenceForm(PreferenceForm form)
+        private static void SetSavedPreferencesToPreferenceForm( PreferenceForm form )
         {
             form.LoggingType = Properties.Settings.Default.LoggerPreference;
             form.ConnectionString =
-                !string.IsNullOrEmpty(Properties.Settings.Default.ConnectionString)
+                !string.IsNullOrEmpty( Properties.Settings.Default.ConnectionString )
                     ? Properties.Settings.Default.ConnectionString
                     : ConfigurationManager.ConnectionStrings["logConnection"].ConnectionString;
             form.LogDirectories = Properties.Settings.Default.LogDirectories;
         }
 
 
-        private void UpdateModelFromPreferenceForm(PreferenceForm form)
+        private void UpdateModelFromPreferenceForm( PreferenceForm form )
         {
             _model.LoggingType = form.LoggingType;
             _model.LogDirectories = form.LogDirectories;
             _model.ConnectionString = form.ConnectionString;
         }
-        private void SaveUserPreferences(PreferenceForm form)
+        private void SaveUserPreferences( PreferenceForm form )
         {
             Properties.Settings.Default.LoggerPreference = form.LoggingType;
             Properties.Settings.Default.LogDirectories = form.LogDirectories;
@@ -177,7 +177,7 @@ namespace DirScan.Client
                     }
                     catch (ScanNotPreparedException exception)
                     {
-                        ErrorLog.Log(ErrorLog.DefaultFileName(subDirectory: "ErrorLogs"), exception);
+                        ErrorLog.Log( ErrorLog.DefaultFileName( subDirectory: "ErrorLogs" ), exception );
                     }
                     break;
             }
@@ -185,25 +185,25 @@ namespace DirScan.Client
         #endregion
 
         #region BackGroundWorker EventHandlers
-        private void BgScanOnDoWork(object sender, DoWorkEventArgs e)
+        private void BgScanOnDoWork( object sender, DoWorkEventArgs e )
         {
             if (_model.FolderSelected)
-                e.Result  = _model.ScanStatistics();
+                e.Result = _model.ScanStatistics();
         }
 
-        private void BgScanOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BgScanOnRunWorkerCompleted( object sender, RunWorkerCompletedEventArgs e )
         {
             progress.Style = ProgressBarStyle.Blocks;
             progress.MarqueeAnimationSpeed = 0;
             progress.Visible = false;
-            status_Resize(sender, EventArgs.Empty);
+            status_Resize( sender, EventArgs.Empty );
 
-            _model.LoadStatsListView(lvStats, lvFileTypes, e.Result as DirectoryDataSummary);
+            _model.LoadStatsListView( lvStats, lvFileTypes, e.Result as DirectoryDataSummary );
             _model.ScanComplete();
         }
         #endregion
 
-        private void miFileExit_Click(object sender, EventArgs e)
+        private void miFileExit_Click( object sender, EventArgs e )
         {
             Close();
         }
