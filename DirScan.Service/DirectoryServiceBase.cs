@@ -3,17 +3,20 @@ using System.IO;
 using System.Linq;
 using AutoMapper;
 using DirScan.Data;
+using DirScan.ErrorLogging;
 using DirScan.Logging;
 
 namespace DirScan.Service
 {
     public abstract class DirectoryServiceBase
     {
+        protected readonly IErrorLogger _errorLogger;
         protected readonly ILogger _logger;
         protected readonly IMapper _mapper;
 
-        protected DirectoryServiceBase( ILogger logger, IMapper mapper )
+        protected DirectoryServiceBase( IErrorLogger errorLogger, ILogger logger, IMapper mapper )
         {
+            _errorLogger = errorLogger;
             _logger = logger;
             _mapper = mapper;
         }

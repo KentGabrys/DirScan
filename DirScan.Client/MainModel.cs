@@ -10,6 +10,7 @@ using AutoMapper;
 using DirScan.Client.Properties;
 using DirScan.Common;
 using DirScan.Data;
+using DirScan.ErrorLogging;
 using DirScan.Logging;
 using DirScan.Service;
 
@@ -24,14 +25,16 @@ namespace DirScan.Client
         private int _fileTypeCount;
         private bool _canScanStatistics;
         private string _logFileName;
-        public ILogger _logger;
         private LoggingType _loggingType;
         
         private readonly Mapper _mapper;
-  
+        private IErrorLogger _errorLogger;
+        public ILogger _logger;
+
         public MainModel()
         {
             _mapper = new Mapper( new MapperConfiguration( a => a.AddProfile( new MappingProfile() ) ) );
+            _errorLogger = ErrorLoggerFactory.Create();
         }
 
         #region Properties
@@ -140,6 +143,7 @@ namespace DirScan.Client
                     $@"{fileName}{DateTime.Now.Year,4:0000}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}_{DateTime.Now.Hour,2:00}_{DateTime.Now.Minute,2:00}_{DateTime.Now.Second,2:00}.csv" );
 
             _logger = FileLogger.Create( _logFileName, logHeader );
+
         }
 
         public void CreateSessionSqlLogging()
@@ -158,7 +162,7 @@ namespace DirScan.Client
         }
         public DirectoryDataSummary ScanStatistics()
         {
-            var dm = new DirectoryManager( _logger, _mapper );
+            var dm = new DirectoryManager(_errorLogger, _logger, _mapper );
             dm.Scan( SelectedFolder, LogDirectories );
             return dm.DirectoryDataSummary;
         }

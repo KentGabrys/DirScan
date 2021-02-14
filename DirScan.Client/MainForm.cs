@@ -177,7 +177,8 @@ namespace DirScan.Client
                     }
                     catch (ScanNotPreparedException exception)
                     {
-                        ErrorLog.Log(ErrorLog.DefaultFileName(subDirectory: "ErrorLogs"), exception);
+                        var _errorLogger = ErrorLoggerFactory.Create();
+                        _errorLogger.Log(exception, $"Error setting logger type: {_model.LoggingType}");
                     }
                     break;
             }

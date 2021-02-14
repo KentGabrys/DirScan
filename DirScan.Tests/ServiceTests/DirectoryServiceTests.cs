@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using AutoMapper;
 using DirScan.Data;
+using DirScan.ErrorLogging;
 using DirScan.Service;
 using NUnit.Framework;
 
@@ -22,12 +23,16 @@ namespace DirScan.Tests
 
             var logFile =
                 Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    $@"DirectoryLog_{DateTime.Now.Year,4:0000}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}_{DateTime.Now.Hour,2:00}-{DateTime.Now.Minute,2:00}-{_fileCount++}.log");
+                    @"C:\Temp\DirScanTestLoggingArea", "DirScanLogs",
+                    $@"DirectoryLog_{DateTime.Now.Year,4:0000}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}_{DateTime.Now.Hour,2:00}-{DateTime.Now.Minute,2:00}-{_fileCount++, 2:00}.log");
+            var errorLogFile =
+                Path.Combine(
+                    @"C:\Temp\DirScanTestLoggingArea", "DirScanErrorLogs",
+                    $@"DirectoryLog_{DateTime.Now.Year,4:0000}{DateTime.Now.Month,2:00}{DateTime.Now.Day,2:00}_{DateTime.Now.Hour,2:00}-{DateTime.Now.Minute,2:00}-{_fileCount, 2:00}.log");
 
             var logger = Logging.FileLogger.Create(logFile);
-
-            _svc = new DirectoryService(logger, mapper);
+            var errorLogger = ErrorLoggerFactory.Create(errorLogFile);
+            _svc = new DirectoryService(errorLogger, logger, mapper);
             _dirInfo = _svc.Scan("c:\\Temp\\DirScanTestArea");
         }
 

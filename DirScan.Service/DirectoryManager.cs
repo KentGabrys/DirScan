@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using AutoMapper;
 using DirScan.Data;
+using DirScan.ErrorLogging;
 using DirScan.Logging;
 
 namespace DirScan.Service
@@ -11,36 +12,38 @@ namespace DirScan.Service
     {
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
+        private readonly IErrorLogger _errorLogger;
 
-        public DirectoryManager( ILogger logger, IMapper mapper )
+        public DirectoryManager(IErrorLogger errorLogger, ILogger logger, IMapper mapper)
         {
-            _logger = logger ?? throw new ArgumentNullException( nameof( _logger ) );
-            _mapper = mapper ?? throw new ArgumentNullException( nameof( _mapper ) );
+            _errorLogger = errorLogger ?? throw new ArgumentException(nameof(_errorLogger));
+            _logger = logger ?? throw new ArgumentNullException(nameof(_logger));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
         }
 
         public void Scan(string path, bool logDirectories = false)
         {
             if (path == null) throw new ArgumentNullException(nameof(path));
 
-            ScanPath( path, logDirectories );
+            ScanPath(path, logDirectories);
         }
 
         private void ScanPath(string path, bool logDirectories = false)
         {
-            var dirSvc = new DirectoryService( _logger, _mapper );
-            var dd = dirSvc.Scan(path,  logDirectories);
+            var dirSvc = new DirectoryService(_errorLogger, _logger, _mapper);
+            var dd = dirSvc.Scan(path, logDirectories);
 
-            if ( dd.CanBeProcessed )
+            if (dd.CanBeProcessed)
             {
-                if ( dd.DirectoryCount > 0 )
-                    foreach ( var dir in dd.Directories )
-                        ScanPath( dir.FullName, logDirectories );
+                if (dd.DirectoryCount > 0)
+                    foreach (var dir in dd.Directories)
+                        ScanPath(dir.FullName, logDirectories);
 
                 DirectoryDataSummary.DirectoryCount += dd.DirectoryCount;
                 DirectoryDataSummary.FileCount += dd.FileCount;
-                DirectoryDataSummary.MergeFileTypes( dd.FileTypes.ToList() );
-                foreach ( var file in dd.Files )
-                    DirectoryDataSummary.Size += new FileInfo( file.FullName ).Length;
+                DirectoryDataSummary.MergeFileTypes(dd.FileTypes.ToList());
+                foreach (var file in dd.Files)
+                    DirectoryDataSummary.Size += new FileInfo(file.FullName).Length;
             }
         }
 

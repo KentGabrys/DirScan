@@ -69,7 +69,7 @@ namespace DirScan.Tests
         }
 
         [Test]
-        public void MainFormInitializeScanMakesProgressBarStyleisMarqueeTest()
+        public void MainFormInitializeScanMakesProgressBarStyleIsMarqueeTest()
         {
             Assert.AreNotEqual( ProgressBarStyle.Marquee, _form.progress.Style );
             _form.InitializeScan();

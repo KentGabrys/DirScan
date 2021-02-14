@@ -11,8 +11,8 @@ namespace DirScan.Service
 {
     public class DirectoryService : DirectoryServiceBase
     {
-        public DirectoryService(ILogger logger, IMapper mapper)
-            : base(logger, mapper)
+        public DirectoryService(IErrorLogger errorLogger, ILogger logger, IMapper mapper)
+            : base(errorLogger, logger, mapper)
         {
         }
 
@@ -42,7 +42,7 @@ namespace DirScan.Service
             }
             catch (Exception exception)
             {
-                ErrorLog.Log(exception, $"An exception occurred attempting to scan {path}.");
+                _errorLogger.Log(exception, $"An exception occurred attempting to scan {path}.");
                 return new DirectoryData();
             }
         }

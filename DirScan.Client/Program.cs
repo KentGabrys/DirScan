@@ -10,7 +10,7 @@ namespace DirScan.Client
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             try
             {
@@ -20,7 +20,8 @@ namespace DirScan.Client
                 Application.Run(new MainForm());
             }catch  (Exception exception)
             {
-                ErrorLog.Log(exception);
+                var _errorLogger = ErrorLoggerFactory.Create();
+                _errorLogger.Log(exception);
                 MessageBox.Show( @"An unhandled error has occurred. Please check the error log file for the issue encountered.",
                     @"Unhandled Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
