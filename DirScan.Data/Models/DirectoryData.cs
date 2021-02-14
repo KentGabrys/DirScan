@@ -8,7 +8,7 @@ namespace DirScan.Data
         public int FileCount { get; set; }
         public int DirectoryCount { get; set; }
         public long DirectoryFileSize { get; set; }
-        public List<FileInfo> Files { get; set; }
+
         public List<DirectoryInfo> Directories { get; set; }
         public IEnumerable<FileType> FileTypes { get; set; }
 

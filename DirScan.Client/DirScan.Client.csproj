@@ -169,7 +169,8 @@ copy "$(TargetDir)*.DLL" "$(SolutionDir)Setup\Client\"  /Y
 copy "$(ProjectDir)Assets\*.*" "$(SolutionDir)Setup\Client\"  /Y</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>del  "$(SolutionDir)Setup\Client\"  /Q</PreBuildEvent>
+    <PreBuildEvent>del  "$(SolutionDir)Setup\Client\"  /Q
+exit 0</PreBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

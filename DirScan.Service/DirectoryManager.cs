@@ -41,9 +41,8 @@ namespace DirScan.Service
 
                 DirectoryDataSummary.DirectoryCount += dd.DirectoryCount;
                 DirectoryDataSummary.FileCount += dd.FileCount;
-                DirectoryDataSummary.MergeFileTypes(dd.FileTypes.ToList());
-                foreach (var file in dd.Files)
-                    DirectoryDataSummary.Size += new FileInfo(file.FullName).Length;
+                DirectoryDataSummary.Size = dd.DirectoryFileSize;
+                DirectoryDataSummary.MergeFileTypes( dd.FileTypes.ToList() );
             }
         }
 

@@ -69,20 +69,6 @@ namespace DirScan.Tests
                 Console.WriteLine($"{ft.Extension, 5} : {ft.TotalSize}  ({ft.Length} bytes)");
         }
 
-        [Test]
-        public void ServiceScansDirectoryHasDirectoryFilesCount()
-        {
-            Assert.AreEqual(1, _dirInfo.Directories.Count());
-            Assert.AreEqual(3, _dirInfo.Files.Count);
-
-            foreach (var d in _dirInfo.Directories)
-                Console.WriteLine($"{d.Name,40}");
-
-            foreach (var f in _dirInfo.Files)
-                Console.WriteLine($"{f.Name,40} : {f.Length,15}");
-        }
-
-
     }
 
 }
